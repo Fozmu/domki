@@ -4,25 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Domki Cesarz - Luksusowe Domki nad wodą</title>
-    <link rel="stylesheet" href="output.css">ink
-   
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'slide-up': 'slideUp 0.8s ease-out',
-                        'fade-in': 'fadeIn 1s ease-out',
-                    },
-                    backdropBlur: {
-                        xs: '2px',
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="output.css">
     <style>
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -31,10 +14,6 @@
         @keyframes glow {
             from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
             to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -57,8 +36,40 @@
         .house-card:hover {
             transform: translateY(-10px) scale(1.02);
         }
+        .house-image-container {
+    width: 100%;
+    height: 12rem; /* Matches the h-48 Tailwind class */
+    border-radius: 1rem; /* Matches the rounded-2xl Tailwind class */
+    overflow: hidden;
+}
+.house-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
         body {
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        /* Custom gallery styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-auto-rows: 250px;
+            gap: 16px; /* Corresponds to Tailwind's gap-4 */
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem; /* Corresponds to Tailwind's rounded-2xl */
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -75,6 +86,7 @@
                         <a href="#houses" class="hover:text-blue-400 transition-colors px-3 py-2 text-sm font-medium">Domki</a>
                         <a href="#amenities" class="hover:text-blue-400 transition-colors px-3 py-2 text-sm font-medium">Udogodnienia</a>
                         <a href="#gallery" class="hover:text-blue-400 transition-colors px-3 py-2 text-sm font-medium">Galeria</a>
+                        <a href="#fishes" class="hover:text-blue-400 transition-colors px-3 py-2 text-sm font-medium">Ryby</a>
                         <a href="#contact" class="hover:text-blue-400 transition-colors px-3 py-2 text-sm font-medium">Kontakt</a>
                     </div>
                 </div>
@@ -93,41 +105,41 @@
                 <a href="#houses" class="block hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-base font-medium">Domki</a>
                 <a href="#amenities" class="block hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-base font-medium">Udogodnienia</a>
                 <a href="#gallery" class="block hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-base font-medium">Galeria</a>
+                <a href="#fishes" class="block hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-base font-medium">Ryby</a>
                 <a href="#contact" class="block hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-base font-medium">Kontakt</a>
             </div>
         </div>
     </nav>
 
     <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0">
-        <img src="./img/cover img.png" alt="Description of your image" class="w-full h-full object-cover opacity-25">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30"></div>
-    </div>
-    <div class="relative z-10 text-center px-4 animate-fade-in">
-        <h1 class="text-6xl md:text-8xl font-bold mb-6 animate-float">
-            <span class="gradient-text">Domki Cesarz</span>
-        </h1>
-        <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Domki nad wodą - Twoje idealne miejsce na wypoczynek w sercu natury
-        </p>
-        <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex justify-center">
-            <a href="#houses" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 animate-glow">
-                Zobacz Domki
-            </a>
-            <a href="#contact" class="inline-block glass px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300">
-                Skontaktuj się
-            </a>
+        <div class="absolute inset-0">
+            <img src="./img/20250821_175443.jpg" alt="Description of your image" class="w-full h-full object-cover opacity-25">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30"></div>
         </div>
-    </div>
-    
-    <div class="absolute top-1/4 left-1/4 w-4 h-4 bg-blue-400 rounded-full animate-float opacity-60"></div>
-    <div class="absolute top-3/4 right-1/4 w-6 h-6 bg-purple-400 rounded-full animate-float opacity-40" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-1/4 left-1/3 w-3 h-3 bg-cyan-400 rounded-full animate-float opacity-50" style="animation-delay: 4s;"></div>
-</section>
+        <div class="relative z-10 text-center px-4 animate-fade-in">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 animate-float">
+                <span class="gradient-text">Domki Cesarz</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Domki nad wodą - Twoje idealne miejsce na wypoczynek w sercu natury
+            </p>
+            <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex justify-center">
+                <a href="#houses" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 animate-glow">
+                    Zobacz Domki
+                </a>
+                <a href="#contact" class="inline-block glass px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300">
+                    Skontaktuj się
+                </a>
+            </div>
+        </div>
+        <div class="absolute top-1/4 left-1/4 w-4 h-4 bg-blue-400 rounded-full animate-float opacity-60"></div>
+        <div class="absolute top-3/4 right-1/4 w-6 h-6 bg-purple-400 rounded-full animate-float opacity-40" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-3 h-3 bg-cyan-400 rounded-full animate-float opacity-50" style="animation-delay: 4s;"></div>
+    </section>
 
     <section id="houses" class="py-20 px-4">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 animate-slide-up">
+            <div class="text-center mb-16">
                 <h2 class="text-5xl font-bold mb-6 gradient-text">Domki Cesarz</h2>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                     7 wyjątkowych domków, każdy z widokiem na Stawy. Maksymalnie 6 gości, minimum 2 dni pobytu.
@@ -138,181 +150,146 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/second house with clean water.png" alt="Widok na Domek #1">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #1</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
                 <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #1</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #2</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #3</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #4</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #5</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #6</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl mb-6 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <div class="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                <span class="text-2xl">🏠</span>
-                            </div>
-                            <p class="text-sm">Zdjęcie domku</p>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #7</h3>
-                    <div class="space-y-3 text-gray-300">
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">👥</span>
-                            <span>Do 6 gości</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🛏️</span>
-                            <span>Sypialnia + rozkładana sofa</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-blue-400 mr-2">🏊</span>
-                            <span>Widok na wodę</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="house-image-container mb-6">
+        <img src="./img/house with clean water.png" alt="Widok na Domek #2">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #2</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
+                             <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/third house with clean water.png" alt="Widok na Domek #3">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #3</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
+                                         <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/house4.png" alt="Widok na Domek #4">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #4</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
+                                       <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/house5.png" alt="Widok na Domek #5">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #5</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
+                                         <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/third house with clean water.png" alt="Widok na Domek #6">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #6</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
+                                         <div class="house-card glass rounded-3xl p-6 hover:shadow-2xl">
+    <div class="house-image-container mb-6">
+        <img src="./img/third house with clean water.png" alt="Widok na Domek #7">
+    </div>
+    <h3 class="text-2xl font-bold mb-4 text-center gradient-text">Domek #7</h3>
+    <div class="space-y-3 text-gray-300">
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">👥</span>
+            <span>Do 6 gości</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🛏️</span>
+            <span>Sypialnia + Dwie rozkładane sofy</span>
+        </div>
+        <div class="flex items-center">
+            <span class="text-blue-400 mr-2">🏊</span>
+            <span>Widok na wodę</span>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </section>
@@ -370,15 +347,56 @@
                     Zobacz piękno naszych domków i otoczenia
                 </p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div> <img src="img/IMG-20250730-WA0011.jpg" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/IMG-20250730-WA0013.jpg" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/IMG-20250730-WA0017.jpg" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/cover img.png" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/IMG-20250730-WA0010.jpg" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/Zrzut ekranu 2025-08-03 232555.png" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
-                <div><img src="img/Z" alt="" class="w-full h-64 bg-gray-700 rounded-2xl"></div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0011.jpg" alt="Widok na domek nad wodą">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0013.jpg" alt="Wnętrze salonu">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0017.jpg" alt="Wnętrze sypialni">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/cover img.png" alt="Widok na jezioro z domkami">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0010.jpg" alt="Domek z zewnątrz">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="Wnętrze kuchni">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232555.png" alt="Wnętrze łazienki">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="Wnętrze domku">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fishes" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 gradient-text">Ryby w naszych stawach</h2>
+                <p class="text-xl text-gray-300">
+                    Idealne miejsce dla wędkarzy. W naszych stawach możesz złowić:
+                </p>
+            </div>
+            <div class="glass rounded-3xl p-8">
+                <ul class="list-disc list-inside text-gray-300 text-lg space-y-2">
+                    <li class="list-item">Karp</li>
+                    <li class="list-item">Amur</li>
+                    <li class="list-item">Szczupak</li>
+                    <li class="list-item">Sandacz</li>
+                    <li class="list-item">Okoń</li>
+                    <li class="list-item">Sum</li>
+                    <li class="list-item">Leszcz</li>
+                    <li class="list-item">Lin</li>
+                    <li class="list-item">Tołpyga</li>
+                    <li class="list-item">Jesiotr</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -391,82 +409,30 @@
                     Masz pytania? Chcesz zarezerwować? Skontaktuj się z nami!
                 </p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div class="glass rounded-3xl p-8">
-                        <h3 class="text-2xl font-bold mb-6 gradient-text">Informacje Kontaktowe</h3>
-                        <div class="space-y-4 text-gray-300">
-                            <div class="flex items-center">
-                                <span class="text-blue-400 mr-4 text-xl">📞</span>
-                                <div>
-                                    <p class="font-semibold">Telefon</p>
-                                    <p>+48 XXX XXX XXX</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-blue-400 mr-4 text-xl">📧</span>
-                                <div>
-                                    <p class="font-semibold">Email</p>
-                                    <p>kontakt@stawycesarz.pl</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-blue-400 mr-4 text-xl">📍</span>
-                                <div>
-                                    <p class="font-semibold">Adres</p>
-                                    <p>Stawy Cesarz<br>XX-XXX Miejscowość</p>
-                                </div>
-                            </div>
+            <div class="glass rounded-3xl p-8">
+                <h3 class="text-2xl font-bold mb-6 gradient-text">Informacje Kontaktowe</h3>
+                <div class="space-y-4 text-gray-300">
+                    <div class="flex items-center">
+                        <span class="text-blue-400 mr-4 text-xl">📞</span>
+                        <div>
+                            <p class="font-semibold">Telefon</p>
+                            <p>+48 726 703 278</p>
                         </div>
                     </div>
-                    <div class="glass rounded-3xl p-8">
-                        <h3 class="text-2xl font-bold mb-6 gradient-text">Cennik</h3>
-                        <div class="space-y-4 text-gray-300">
-                            <div class="flex justify-between items-center">
-                                <span>Opłata wstępna:</span>
-                                <span class="text-yellow-400 font-bold">500 zł</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span>Minimum pobytu:</span>
-                                <span class="text-blue-400 font-bold">2 dni</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span>Maksymalnie gości:</span>
-                                <span class="text-green-400 font-bold">6 osób</span>
-                            </div>
-                            <div class="border-t border-gray-600 pt-4 mt-4">
-                                <div class="flex justify-between items-center">
-                                    <span>Jacuzzi (opcja):</span>
-                                    <span class="text-purple-400 font-bold">Na zapytanie</span>
-                                </div>
-                            </div>
+                    <div class="flex items-center">
+                        <span class="text-blue-400 mr-4 text-xl">📧</span>
+                        <div>
+                            <p class="font-semibold">Email</p>
+                            <p>monikadziubek@gmx.de</p>
                         </div>
                     </div>
-                </div>
-                <div class="glass rounded-3xl p-8">
-                    <h3 class="text-2xl font-bold mb-6 gradient-text">Wyślij Wiadomość</h3>
-                    <form class="space-y-6">
+                    <div class="flex items-center">
+                        <span class="text-blue-400 mr-4 text-xl">📍</span>
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Imię i Nazwisko</label>
-                            <input type="text" class="w-full px-4 py-3 bg-black/30 border border-gray-600 rounded-xl focus:border-blue-400 focus:outline-none transition-colors text-white">
+                            <p class="font-semibold">Adres</p>
+                            <p>Jarząbki 19a<br>28-114 Jarząbki</p>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                            <input type="email" class="w-full px-4 py-3 bg-black/30 border border-gray-600 rounded-xl focus:border-blue-400 focus:outline-none transition-colors text-white">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Telefon</label>
-                            <input type="tel" class="w-full px-4 py-3 bg-black/30 border border-gray-600 rounded-xl focus:border-blue-400 focus:outline-none transition-colors text-white">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Wiadomość</label>
-                            <textarea rows="4" class="w-full px-4 py-3 bg-black/30 border border-gray-600 rounded-xl focus:border-blue-400 focus:outline-none transition-colors text-white resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
-                            Wyślij Wiadomość
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -483,7 +449,6 @@
     </footer>
 
     <script>
-        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -496,18 +461,6 @@
                 }
             });
         });
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-slide-up');
-                }
-            });
-        }, observerOptions);
 
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -521,13 +474,6 @@
                 mobileMenu.classList.add('hidden');
             }
         });
-
-        const galleryImages = document.querySelectorAll('#gallery > div > div > div');
-        galleryImages.forEach(img => {
-            observer.observe(img);
-        });
-
-        const amenities = document.querySelectorAll('#amenities > div > div > div');
-        amenities.forEach(amenity => {
-            observer.observe(amenity);
-        });
+    </script>
+</body>
+</html>

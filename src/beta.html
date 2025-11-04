@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domki Cesarz - Luksusowe Domki nad wodą</title>
+    <link rel="icon" href="./Fozmu-Studios.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Lato:wght@300;400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Navigation */
+        .nav-classic {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: #333333;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: #d4af37;
+        }
+
+        /* Hero Section */
+        .hero-classic {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.85)),
+                        url('./img/20250821_175443.jpg') center/cover;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Buttons */
+        .btn-classic {
+            background-color: #d4af37;
+            color: #ffffff;
+            padding: 1rem 2.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #d4af37;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-classic:hover {
+            background-color: #b8941f;
+            border-color: #b8941f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #333333;
+            border: 2px solid #333333;
+            padding: 1rem 2.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: #333333;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Styling */
+        .section-classic {
+            padding: 5rem 1rem;
+        }
+
+        .section-light {
+            background-color: #fafafa;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666666;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Cards */
+        .card-classic {
+            background-color: #ffffff;
+            border: 1px solid #e5e5e5;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card-classic:hover {
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border-radius: 3px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        /* Feature Icons */
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+        }
+
+        /* Divider */
+        .divider {
+            width: 80px;
+            height: 3px;
+            background-color: #d4af37;
+            margin: 0 auto 2rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            border-radius: 3px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer-classic {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        /* Contact Info */
+        .contact-box {
+            background-color: #fafafa;
+            padding: 2rem;
+            border-left: 4px solid #d4af37;
+            margin-bottom: 1.5rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-box:hover {
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-hours {
+            background-color: #d4af37;
+            color: #ffffff;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+
+        /* List styling */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li i {
+            color: #d4af37;
+            margin-right: 0.75rem;
+            width: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-classic {
+                padding: 3rem 1rem;
+            }
+
+            .card-classic {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .btn-classic, .btn-outline {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.875rem;
+            }
+
+            /* Mobile-optimized navigation */
+            .nav-classic {
+                position: fixed;
+                top: 0;
+                width: 100%;
+            }
+
+            /* Better mobile cards */
+            .card-image {
+                height: 200px;
+            }
+
+            /* Mobile gallery */
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-item {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .card-classic {
+                padding: 1rem;
+            }
+
+            .btn-classic, .btn-outline {
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Very small screens */
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-classic fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <h1 class="text-2xl font-bold" style="font-family: 'Playfair Display', serif;">
+                    <i class="fas fa-home" style="color: #d4af37;"></i> Domki Cesarz
+                </h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-link">Strona Główna</a>
+                    <a href="#houses" class="nav-link">Domki</a>
+                    <a href="#amenities" class="nav-link">Udogodnienia</a>
+                    <a href="#sylwester" class="nav-link">Sylwester 2026</a>
+                    <a href="#gallery" class="nav-link">Galeria</a>
+                    <a href="#fishes" class="nav-link">Ryby</a>
+                    <a href="#contact" class="nav-link">Kontakt</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#home" class="block nav-link">Strona Główna</a>
+                <a href="#houses" class="block nav-link">Domki</a>
+                <a href="#amenities" class="block nav-link">Udogodnienia</a>
+                <a href="#sylwester" class="block nav-link">Sylwester 2026</a>
+                <a href="#gallery" class="block nav-link">Galeria</a>
+                <a href="#fishes" class="block nav-link">Ryby</a>
+                <a href="#contact" class="block nav-link">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-classic mt-20">
+        <div class="text-center px-4">
+            <h1 class="hero-title">Domki Cesarz</h1>
+            <div class="divider"></div>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+                Luksusowe domki nad wodą - Twoje idealne miejsce na wypoczynek w sercu natury
+            </p>
+            <div class="space-y-4 md:space-y-0 md:space-x-4">
+                <a href="#houses" class="btn-classic">
+                    <i class="fas fa-home mr-2"></i>Zobacz Domki
+                </a>
+                <a href="#contact" class="btn-outline">
+                    <i class="fas fa-phone mr-2"></i>Skontaktuj się
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Houses Section -->
+    <section id="houses" class="section-classic">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">Nasze Domki</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">
+                7 wyjątkowych domków, każdy z widokiem na Stawy. Maksymalnie 6 gości.
+            </p>
+
+            <!-- Quick Info Cards - Moved to top -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
+                <div class="card-classic text-center">
+                    <div class="text-4xl mb-3" style="color: #d4af37;">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2">Opłata wstępna</h4>
+                    <p class="text-gray-700 text-lg">500 zł przy rezerwacji</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-4xl mb-3" style="color: #d4af37;">
+                        <i class="fas fa-calendar-days"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2">Minimum pobytu</h4>
+                    <p class="text-gray-700 text-lg">2 dni</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- House 1 -->
+                <div class="card-classic">
+                    <img src="./img/second house with clean water.png" alt="Domek #1" class="card-image">
+                    <h3 class="card-title">Domek #1</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- House 2 -->
+                <div class="card-classic">
+                    <img src="./img/house with clean water.png" alt="Domek #2" class="card-image">
+                    <h3 class="card-title">Domek #2</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- House 3 -->
+                <div class="card-classic">
+                    <img src="./img/third house with clean water.png" alt="Domek #3" class="card-image">
+                    <h3 class="card-title">Domek #3</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- Google Maps Location - Full Width -->
+            </div>
+
+            <div class="mt-12">
+                <div class="card-classic">
+                    <div class="text-center mb-6">
+                        <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h3 class="card-title text-3xl">Nasza Lokalizacja</h3>
+                        <p class="text-gray-600 mb-2 text-lg">Jarząbki 19a, 28-114 Jarząbki, Mazowieckie</p>
+                    </div>
+                    <div style="width: 100%; height: 500px; border-radius: 5px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.420815843856!2d20.828877576624876!3d51.77451247184446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471878e476c5e9ab%3A0x8c8b8f8c8c8c8c8c!2sJarz%C4%85bki%2019a%2C%2028-114%20Jarz%C4%85bki!5e0!3m2!1spl!2spl!4v1709999999999!5m2!1spl!2spl"
+                            width="100%"
+                            height="500"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <a href="https://maps.app.goo.gl/Vnj8Y66X7WzfdcLt9"
+                           target="_blank"
+                           class="btn-classic inline-block">
+                            <i class="fas fa-directions mr-2"></i>Otwórz w Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+
+                <!-- House 4 -->
+                <div class="card-classic">
+                    <img src="./img/house4.png" alt="Domek #4" class="card-image">
+                    <h3 class="card-title">Domek #4</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- House 5 -->
+                <div class="card-classic">
+                    <img src="./img/house5.png" alt="Domek #5" class="card-image">
+                    <h3 class="card-title">Domek #5</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- House 6 -->
+                <div class="card-classic">
+                    <img src="./img/third house with clean water.png" alt="Domek #6" class="card-image">
+                    <h3 class="card-title">Domek #6</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+
+                <!-- House 7 -->
+                <div class="card-classic">
+                    <img src="./img/third house with clean water.png" alt="Domek #7" class="card-image">
+                    <h3 class="card-title">Domek #7</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-users"></i> Do 6 gości</li>
+                        <li><i class="fas fa-bed"></i> Sypialnia + Dwie rozkładane sofy</li>
+                        <li><i class="fas fa-water"></i> Widok na wodę</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="section-classic section-light">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">Udogodnienia</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">
+                Wszystko czego potrzebujesz dla idealnego wypoczynku
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-bed"></i></div>
+                    <h3 class="card-title">Komfortowe Sypialnie</h3>
+                    <p class="text-gray-600">Sypialnia z łóżkiem typu queen size oraz dwie rozkładane sofy w salonie</p>
+                </div>
+
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                    <h3 class="card-title">Wyposażona Kuchnia</h3>
+                    <p class="text-gray-600">Pełni wyposażona kuchnia ze wszystkimi niezbędnymi urządzeniami</p>
+                </div>
+
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-shower"></i></div>
+                    <h3 class="card-title">Łazienka</h3>
+                    <p class="text-gray-600">Łazienka ze wszystkimi niezbędnymi udogodnieniami</p>
+                </div>
+
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-water"></i></div>
+                    <h3 class="card-title">Widok na wodę</h3>
+                    <p class="text-gray-600">Wspaniały widok na wodę prosto za drzwiami z piaszczystą plażą</p>
+                </div>
+
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-hot-tub"></i></div>
+                    <h3 class="card-title">Jacuzzi</h3>
+                    <p class="text-gray-600">Dodaj luksus do swojego pobytu z prywatnym jacuzzi (Dodatkowy Koszt)</p>
+                </div>
+
+                <div class="card-classic text-center">
+                    <div class="feature-icon"><i class="fas fa-car"></i></div>
+                    <h3 class="card-title">Parking</h3>
+                    <p class="text-gray-600">Duży parking z wystarczającą ilością miejsca dla wszystkich gości</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sylwester 2026 Section -->
+    <section id="sylwester" class="section-classic" style="background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- Main Banner -->
+            <div class="text-center mb-12">
+                <div class="inline-block mb-6">
+                    <div class="text-7xl mb-4 animate-pulse" style="filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.3));">
+                        🎉
+                    </div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-black mb-4" style="color: #1a1a1a; font-family: 'Playfair Display', serif; letter-spacing: 2px;">
+                    SYLWESTER 2026
+                </h2>
+                <div class="divider" style="background-color: #d4af37; width: 120px; height: 4px;"></div>
+
+                <div class="flex items-center justify-center gap-3 mt-6 mb-4">
+                    <i class="fas fa-headphones text-4xl" style="color: #d4af37;"></i>
+                    <span class="text-3xl md:text-4xl font-bold" style="color: #d4af37;">DJ LIVE</span>
+                    <i class="fas fa-music text-4xl" style="color: #d4af37;"></i>
+                </div>
+
+                <p class="text-xl md:text-2xl font-semibold mb-8" style="color: #333333;">
+                    Niezapomniana noc pełna muzyki, tańca i fajerwerków nad wodą! 🌊✨
+                </p>
+            </div>
+
+            <!-- Feature Cards in Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="card-classic text-center" style="background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border: 2px solid #d4af37;">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-microphone" style="color: #d4af37;"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3" style="color: #1a1a1a;">LIVE DJ</h3>
+                    <p class="text-gray-600">Profesjonalna muzyka przez całą noc</p>
+                </div>
+
+                <div class="card-classic text-center" style="background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border: 2px solid #d4af37;">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-burst" style="color: #d4af37;"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3" style="color: #1a1a1a;">FAJERWERKI</h3>
+                    <p class="text-gray-600">Spektakularny pokaz o północy</p>
+                </div>
+
+                <div class="card-classic text-center" style="background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border: 2px solid #d4af37;">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-champagne-glasses" style="color: #d4af37;"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3" style="color: #1a1a1a;">SZAMPAN</h3>
+                    <p class="text-gray-600">Toast o północy nad wodą</p>
+                </div>
+
+                <div class="card-classic text-center" style="background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border: 2px solid #d4af37;">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-user-group" style="color: #d4af37;"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3" style="color: #1a1a1a;">TANIEC</h3>
+                    <p class="text-gray-600">Zabawa do białego rana</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="text-center">
+                <div class="card-classic inline-block" style="background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%); border: none; padding: 3rem 4rem;">
+                    <div class="text-white mb-6">
+                        <i class="fas fa-calendar-days text-4xl mb-3"></i>
+                        <p class="text-2xl md:text-3xl font-black mb-2">
+                            31 GRUDNIA 2025
+                        </p>
+                        <p class="text-xl">
+                            NOC DO 1 STYCZNIA 2026
+                        </p>
+                    </div>
+
+                    <a href="#contact" class="inline-block" style="background-color: #ffffff; color: #d4af37; padding: 1.25rem 3rem; border-radius: 50px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                        <i class="fas fa-calendar-check mr-2"></i>ZAREZERWUJ MIEJSCE
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Party Elements -->
+            <div class="text-center mt-12">
+                <div class="text-4xl space-x-4">
+                    <span>🎊</span>
+                    <span>🎈</span>
+                    <span>🎆</span>
+                    <span>🍾</span>
+                    <span>🎵</span>
+                    <span>💃</span>
+                    <span>🎉</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-classic section-light">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">Galeria</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">
+                Zobacz piękno naszych domków i otoczenia
+            </p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0011.jpg" alt="Widok na domek nad wodą">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0013.jpg" alt="Wnętrze salonu">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0017.jpg" alt="Wnętrze sypialni">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/cover img.png" alt="Widok na jezioro z domkami">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250730-WA0010.jpg" alt="Domek z zewnątrz">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="Wnętrze kuchni">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232555.png" alt="Wnętrze łazienki">
+                </div>
+                <div class="gallery-item">
+                    <img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="Wnętrze domku">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fishes Section -->
+    <section id="fishes" class="section-classic">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="section-title">Ryby w naszych stawach</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">
+                Idealne miejsce dla wędkarzy. W naszych stawach możesz złowić:
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #d4af37;"></i></div>
+                    <p class="font-semibold">Karp</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #4a9eff;"></i></div>
+                    <p class="font-semibold">Amur</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #d4af37;"></i></div>
+                    <p class="font-semibold">Szczupak</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #4a9eff;"></i></div>
+                    <p class="font-semibold">Sandacz</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #d4af37;"></i></div>
+                    <p class="font-semibold">Okoń</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #4a9eff;"></i></div>
+                    <p class="font-semibold">Sum</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #d4af37;"></i></div>
+                    <p class="font-semibold">Leszcz</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #4a9eff;"></i></div>
+                    <p class="font-semibold">Lin</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #d4af37;"></i></div>
+                    <p class="font-semibold">Tołpyga</p>
+                </div>
+                <div class="card-classic text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fish" style="color: #4a9eff;"></i></div>
+                    <p class="font-semibold">Jesiotr</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-classic section-light">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="section-title">Skontaktuj się z nami</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">
+                Masz pytania? Chcesz zarezerwować? Skontaktuj się z nami!
+            </p>
+
+            <!-- Contact Hours -->
+            <div class="contact-hours">
+                <h3 class="text-2xl font-bold mb-2">
+                    <i class="fas fa-clock mr-2"></i>GODZINY KONTAKTU
+                </h3>
+                <p class="text-lg">PONIEDZIAŁEK - NIEDZIELA: 8:00 - 21:30</p>
+                <p class="text-sm mt-2">Dostępni 7 dni w tygodniu dla Twojej wygody!</p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-box">
+                <h3 class="text-xl font-bold mb-2" style="color: #d4af37;">
+                    <i class="fas fa-phone mr-2"></i>Telefon
+                </h3>
+                <p class="text-lg font-semibold mb-1">+48 726 703 278</p>
+                <p class="text-sm text-gray-600">Dostępny pon-nie, 8:00-21:30</p>
+            </div>
+
+            <div class="contact-box">
+                <h3 class="text-xl font-bold mb-2" style="color: #d4af37;">
+                    <i class="fas fa-envelope mr-2"></i>Email
+                </h3>
+                <p class="text-lg font-semibold mb-1">monikadziubek@gmx.de</p>
+                <p class="text-sm text-gray-600">Odpowiadamy w ciągu 24h</p>
+            </div>
+
+            <div class="contact-box">
+                <h3 class="text-xl font-bold mb-2" style="color: #d4af37;">
+                    <i class="fas fa-map-marker-alt mr-2"></i>Adres
+                </h3>
+                <p class="text-lg font-semibold">Jarząbki 19a</p>
+                <p class="text-lg font-semibold">28-114 Jarząbki</p>
+                <p class="text-sm text-gray-600">Mazowieckie, Polska</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-classic">
+        <h3 class="text-3xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: #d4af37;">
+            <i class="fas fa-home mr-2"></i>Domki Cesarz
+        </h3>
+        <p class="text-gray-400 mb-6">Twoje miejsce na luksusowy wypoczynek nad wodą</p>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-gray-500 text-sm">
+            <span><i class="far fa-copyright mr-1"></i>2025 Domki Cesarz. Wszelkie prawa zastrzeżone.</span>
+            <span><i class="fas fa-water mr-1"></i>Relaks nad wodą</span>
+            <span><i class="fas fa-fish mr-1"></i>Wędkowanie</span>
+            <span><i class="fas fa-leaf mr-1"></i>Natura</span>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('✨ Domki Cesarz - Classic Design Loaded! ✨');
+    </script>
+</body>
+</html>

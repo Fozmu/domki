@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>Domki Cesarz - Luksusowy Wypoczynek nad Wodą</title>
+    <link>https://domkicesarz.com</link>
+    <description>Aktualności, promocje i wieści znad stawów w Jarząbkach. Idealne miejsce dla wędkarzy i rodzin.</description>
+    <language>pl</language>
+    <atom:link href="https://domkicesarz.com/feed.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+        <title>Zapraszamy nad wodę w sezonie 2026!</title>
+        <link>https://domkicesarz.com/#domki</link>
+        <description>Nasze 7 luksusowych domków czeka na gości. Każdy domek oferuje widok na stawy, prywatną plażę i pełne wyposażenie dla 6 osób.</description>
+        <pubDate>Wed, 28 Jan 2026 10:00:00 GMT</pubDate>
+        <guid>https://domkicesarz.com/update-2026-01</guid>
+    </item>
+
+    <item>
+        <title>Raj dla wędkarzy - co bierze w naszych stawach?</title>
+        <link>https://domkicesarz.com/#ryby</link>
+        <description>W naszych zarybionych stawach złowisz karpia, amura, szczupaka, a nawet jesiotra. Idealne warunki na wędkarski weekend!</description>
+        <pubDate>Mon, 26 Jan 2026 14:30:00 GMT</pubDate>
+        <guid>https://domkicesarz.com/fishing-news-jan</guid>
+    </item>
+
+    <item>
+        <title>Relaks w gorącej balii pod gwiazdami</title>
+        <link>https://domkicesarz.com/#udogodnienia</link>
+        <description>Przypominamy o możliwości skorzystania z naszej tradycyjnej balii ogrzewanej drewnem. Idealny sposób na odprężenie po dniu spędzonym na łonie natury.</description>
+        <pubDate>Fri, 23 Jan 2026 09:00:00 GMT</pubDate>
+        <guid>https://domkicesarz.com/amenities-balia</guid>

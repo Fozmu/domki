@@ -448,9 +448,110 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Construction Notice */
+        .construction-alert {
+            background: linear-gradient(90deg, #7a5b00, #9c7a12);
+            color: #fff8e6;
+            padding: 0.85rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 60;
+            border-bottom: 1px solid rgba(255, 230, 150, 0.3);
+        }
+
+        .construction-alert i { color: #ffe08a; margin-right: 0.5rem; }
+
+        .construction-alert .close-alert {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff8e6;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        .construction-alert .close-alert:hover { opacity: 1; }
+
+        /* Cookie Consent */
+        .cookie-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            background: #0d0d0d;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .cookie-bar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.25rem;
+            justify-content: space-between;
+        }
+
+        .cookie-bar p { color: #b0b0b0; font-size: 0.85rem; margin: 0; flex: 1; min-width: 240px; }
+        .cookie-bar a { color: #d4af37; text-decoration: underline; }
+
+        .cookie-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+        .cookie-btn {
+            padding: 0.7rem 1.6rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cookie-btn.accept { background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%); color: #0a0a0a; }
+        .cookie-btn.accept:hover { background: linear-gradient(135deg, #e5c349 0%, #d4af37 100%); }
+        .cookie-btn.decline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #b0b0b0; }
+        .cookie-btn.decline:hover { border-color: #d4af37; color: #d4af37; }
+
+        @media (max-width: 640px) {
+            .cookie-bar-inner { flex-direction: column; align-items: stretch; text-align: center; }
+            .cookie-actions { justify-content: center; }
+        }
+
+        /* Studio credit */
+        .studio-credit {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .studio-credit:hover { color: #d4af37; }
+        .studio-credit img { height: 20px; width: auto; opacity: 0.85; }
     </style>
 </head>
 <body>
+    <!-- Construction Notice -->
+    <div class="construction-alert" id="construction-alert" style="position: fixed; top: 0; left: 0; right: 0; z-index: 70;">
+        <i class="fas fa-triangle-exclamation"></i><span data-lang="construction_alert">Uwaga: do 2027 roku w okolicy trwają prace budowlane - możliwy hałas.</span>
+        <button type="button" class="close-alert" id="alert-close" aria-label="Close">&times;</button>
+    </div>
+
     <!-- Navigation -->
     <nav class="nav-classic fixed top-0 w-full z-50">
         <div class="w-full px-4 md:px-8">
@@ -520,6 +621,29 @@
         </div>
     </section>
 
+    <!-- Reviews Section -->
+    <section id="reviews" class="section-classic section-light">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title" data-lang="reviews_title">Opinie Gości</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle" data-lang="reviews_subtitle">
+                Co mówią o nas goście — prosto z Google
+            </p>
+
+            <div id="home-rating" class="text-center mb-10"></div>
+            <div id="home-reviews" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+            <div class="text-center mt-10 space-y-4 md:space-y-0 md:space-x-4">
+                <a href="./reviews.html" class="btn-outline">
+                    <i class="fas fa-star mr-2"></i><span data-lang="reviews_see_all">Zobacz wszystkie opinie</span>
+                </a>
+                <a href="https://g.page/r/CQaOhhvtf_qsEAE/review" target="_blank" rel="noopener" class="btn-classic">
+                    <i class="fas fa-pen mr-2"></i><span data-lang="reviews_write">Wystaw opinię</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Houses Section -->
     <section id="houses" class="section-classic">
         <div class="max-w-6xl mx-auto px-4">
@@ -584,9 +708,10 @@
                         <h3 class="card-title text-3xl" data-lang="location_title">Nasza Lokalizacja</h3>
                         <p class="text-gray-400 mb-2 text-lg">Jarząbki 19a, 28-114 Jarząbki, świętokrzyskie</p>
                     </div>
-                    <div style="width: 100%; height: 500px; border-radius: 5px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); border: 1px solid rgba(212, 175, 55, 0.2);">
+                    <div id="map-wrap" style="width: 100%; height: 500px; border-radius: 5px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); position: relative;">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.420815843856!2d20.828877576624876!3d51.77451247184446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471878e476c5e9ab%3A0x8c8b8f8c8c8c8c8c!2sJarz%C4%85bki%2019a%2C%2028-114%20Jarz%C4%85bki!5e0!3m2!1spl!2spl!4v1709999999999!5m2!1spl!2spl"
+                            id="map-frame"
+                            data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2470.420815843856!2d20.828877576624876!3d51.77451247184446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471878e476c5e9ab%3A0x8c8b8f8c8c8c8c8c!2sJarz%C4%85bki%2019a%2C%2028-114%20Jarz%C4%85bki!5e0!3m2!1spl!2spl!4v1709999999999!5m2!1spl!2spl"
                             width="100%"
                             height="500"
                             style="border:0; filter: invert(90%) hue-rotate(180deg) brightness(0.95) contrast(0.9);"
@@ -594,6 +719,15 @@
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
+                        <div id="map-consent" style="position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 2rem; background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);">
+                            <div>
+                                <div class="feature-icon" style="font-size: 2rem;"><i class="fas fa-map-location-dot"></i></div>
+                                <p style="color: #b0b0b0; max-width: 380px; margin: 0 auto 1.25rem;" data-lang="map_consent_text">Mapa Google jest ładowana dopiero po akceptacji plików cookies.</p>
+                                <button type="button" id="map-consent-btn" class="btn-classic" style="cursor: pointer;">
+                                    <i class="fas fa-map mr-2"></i><span data-lang="map_consent_btn">Pokaż mapę</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-6 text-center">
                         <a href="https://maps.app.goo.gl/Vnj8Y66X7WzfdcLt9"
@@ -691,29 +825,6 @@
                 <div class="gallery-item">
                     <img src="img/Zrzut ekranu 2025-08-03 232603.png" alt="Wnętrze domku">
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section id="reviews" class="section-classic">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="section-title" data-lang="reviews_title">Opinie Gości</h2>
-            <div class="divider"></div>
-            <p class="section-subtitle" data-lang="reviews_subtitle">
-                Co mówią o nas goście — prosto z Google
-            </p>
-
-            <div id="home-rating" class="text-center mb-10"></div>
-            <div id="home-reviews" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-
-            <div class="text-center mt-10 space-y-4 md:space-y-0 md:space-x-4">
-                <a href="./reviews.html" class="btn-outline">
-                    <i class="fas fa-star mr-2"></i><span data-lang="reviews_see_all">Zobacz wszystkie opinie</span>
-                </a>
-                <a href="https://g.page/r/CQaOhhvtf_qsEAE/review" target="_blank" rel="noopener" class="btn-classic">
-                    <i class="fas fa-pen mr-2"></i><span data-lang="reviews_write">Wystaw opinię</span>
-                </a>
             </div>
         </div>
     </section>
@@ -830,7 +941,24 @@
             <span><i class="fas fa-fish mr-1"></i><span data-lang="footer_fishing">Wędkowanie</span></span>
             <span><i class="fas fa-leaf mr-1"></i><span data-lang="footer_nature">Natura</span></span>
         </div>
+        <div>
+            <a class="studio-credit" href="https://fozmu.studio" target="_blank" rel="noopener">
+                <img src="./img/fozmu-logo.png" alt="Fozmu Studios" loading="lazy">
+                <span data-lang="footer_madeby">Made by Fozmu Studios</span>
+            </a>
+        </div>
     </footer>
+
+    <!-- Cookie Consent -->
+    <div class="cookie-bar" id="cookie-bar" style="display: none;">
+        <div class="cookie-bar-inner">
+            <p data-lang="cookie_text">Używamy plików cookies, aby zapewnić najlepsze działanie strony (np. mapa Google). Możesz je zaakceptować lub odrzucić.</p>
+            <div class="cookie-actions">
+                <button type="button" class="cookie-btn decline" id="cookie-decline" data-lang="cookie_decline">Odrzuć</button>
+                <button type="button" class="cookie-btn accept" id="cookie-accept" data-lang="cookie_accept">Akceptuję</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Translations
@@ -901,6 +1029,13 @@
                 footer_relax: 'Relaks nad wodą',
                 footer_fishing: 'Wędkowanie',
                 footer_nature: 'Natura',
+                footer_madeby: 'Made by Fozmu Studios',
+                construction_alert: 'Uwaga: do 2027 roku w okolicy trwają prace budowlane - możliwy hałas.',
+                cookie_text: 'Używamy plików cookies, aby zapewnić najlepsze działanie strony (np. mapa Google). Możesz je zaakceptować lub odrzucić.',
+                cookie_accept: 'Akceptuję',
+                cookie_decline: 'Odrzuć',
+                map_consent_text: 'Mapa Google jest ładowana dopiero po akceptacji plików cookies.',
+                map_consent_btn: 'Pokaż mapę',
                 wa_status: 'Zwykle odpowiadamy w ciągu kilku godzin',
                 wa_greeting: 'Cześć! 👋 W czym możemy pomóc?',
                 wa_sub: 'Wybierz temat, a odpiszemy na WhatsApp.',
@@ -975,6 +1110,13 @@
                 footer_relax: 'Waterside Relaxation',
                 footer_fishing: 'Fishing',
                 footer_nature: 'Nature',
+                footer_madeby: 'Made by Fozmu Studios',
+                construction_alert: 'Notice: construction work is ongoing nearby until 2027 - some noise may be heard.',
+                cookie_text: 'We use cookies to make sure the site works properly (e.g. the Google map). You can accept or decline them.',
+                cookie_accept: 'Accept',
+                cookie_decline: 'Decline',
+                map_consent_text: 'The Google map only loads after you accept cookies.',
+                map_consent_btn: 'Show map',
                 wa_status: 'Usually replies within a few hours',
                 wa_greeting: 'Hi! 👋 How can we help?',
                 wa_sub: 'Pick a topic and we\'ll reply on WhatsApp.',
@@ -1049,6 +1191,13 @@
                 footer_relax: 'Entspannung am Wasser',
                 footer_fishing: 'Angeln',
                 footer_nature: 'Natur',
+                footer_madeby: 'Made by Fozmu Studios',
+                construction_alert: 'Hinweis: Bis 2027 finden in der Umgebung Bauarbeiten statt - gelegentlicher Lärm möglich.',
+                cookie_text: 'Wir verwenden Cookies, damit die Seite richtig funktioniert (z.B. die Google-Karte). Sie können diese akzeptieren oder ablehnen.',
+                cookie_accept: 'Akzeptieren',
+                cookie_decline: 'Ablehnen',
+                map_consent_text: 'Die Google-Karte wird erst nach Zustimmung zu Cookies geladen.',
+                map_consent_btn: 'Karte anzeigen',
                 wa_status: 'Antwortet meist innerhalb weniger Stunden',
                 wa_greeting: 'Hallo! 👋 Wie können wir helfen?',
                 wa_sub: 'Wähle ein Thema, wir antworten per WhatsApp.',
@@ -1193,6 +1342,63 @@
         });
 
         console.log('✨ Domki Cesarz - Dark Luxury Design Loaded! ✨');
+
+        // ----- Construction notice -----
+        const ALERT_KEY = 'constructionAlertDismissed';
+        const alertBar = document.getElementById('construction-alert');
+        const navBar = document.querySelector('.nav-classic');
+        const heroSection = document.getElementById('home');
+
+        function positionForAlert() {
+            if (alertBar.style.display === 'none') {
+                navBar.style.top = '0px';
+                heroSection.style.marginTop = '';
+            } else {
+                const h = alertBar.offsetHeight;
+                navBar.style.top = h + 'px';
+                heroSection.style.marginTop = (80 + h) + 'px';
+            }
+        }
+
+        if (localStorage.getItem(ALERT_KEY) === '1') {
+            alertBar.style.display = 'none';
+        }
+        positionForAlert();
+        window.addEventListener('resize', positionForAlert);
+
+        document.getElementById('alert-close').addEventListener('click', () => {
+            alertBar.style.display = 'none';
+            localStorage.setItem(ALERT_KEY, '1');
+            positionForAlert();
+        });
+
+        // ----- Cookie consent + Google Maps gating -----
+        const COOKIE_KEY = 'cookieConsent';
+        const cookieBar = document.getElementById('cookie-bar');
+
+        function loadMap() {
+            const frame = document.getElementById('map-frame');
+            if (frame && !frame.src && frame.dataset.src) frame.src = frame.dataset.src;
+            const consentBox = document.getElementById('map-consent');
+            if (consentBox) consentBox.style.display = 'none';
+        }
+
+        function setCookieConsent(value) {
+            localStorage.setItem(COOKIE_KEY, value);
+            cookieBar.style.display = 'none';
+            if (value === 'accepted') loadMap();
+        }
+
+        document.getElementById('cookie-accept').addEventListener('click', () => setCookieConsent('accepted'));
+        document.getElementById('cookie-decline').addEventListener('click', () => setCookieConsent('declined'));
+        document.getElementById('map-consent-btn').addEventListener('click', loadMap);
+
+        const savedConsent = localStorage.getItem(COOKIE_KEY);
+        if (savedConsent === 'accepted') {
+            loadMap();
+        } else if (!savedConsent) {
+            cookieBar.style.display = 'block';
+        }
     </script>
 
     <!-- ===== WhatsApp Chat Widget ===== -->

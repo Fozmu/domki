@@ -107,6 +107,27 @@
             box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
         }
 
+        .btn-outline {
+            background-color: transparent;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 1rem 3rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: #d4af37;
+            color: #0a0a0a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+        }
+
         /* Rating summary */
         .rating-summary {
             background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);
@@ -238,7 +259,7 @@
         @media (max-width: 480px) {
             .section-title { font-size: 1.8rem; }
             .reviews-grid { grid-template-columns: 1fr; }
-            .btn-classic { width: 100%; text-align: center; }
+            .btn-classic, .btn-outline { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -301,9 +322,12 @@
             <div id="summary"></div>
             <div id="reviews" class="reviews-grid"></div>
 
-            <div class="text-center mt-12">
+            <div class="text-center mt-12 space-y-4 md:space-y-0 md:space-x-4">
                 <a id="google-link" href="https://maps.app.goo.gl/Vnj8Y66X7WzfdcLt9" target="_blank" rel="noopener" class="btn-classic">
                     <i class="fab fa-google mr-2"></i><span data-lang="reviews_cta">Zobacz wszystkie opinie w Google</span>
+                </a>
+                <a href="https://g.page/r/CQaOhhvtf_qsEAE/review" target="_blank" rel="noopener" class="btn-outline">
+                    <i class="fas fa-pen mr-2"></i><span data-lang="reviews_write">Wystaw opinię</span>
                 </a>
             </div>
         </div>
@@ -327,6 +351,7 @@
                 reviews_title: 'Opinie Gości',
                 reviews_subtitle: 'Co mówią o nas goście — prosto z Google',
                 reviews_cta: 'Zobacz wszystkie opinie w Google',
+                reviews_write: 'Wystaw opinię',
                 reviews_based_on: 'na podstawie {n} opinii',
                 reviews_more: 'Czytaj więcej',
                 reviews_less: 'Zwiń',
@@ -341,6 +366,7 @@
                 reviews_title: 'Guest Reviews',
                 reviews_subtitle: 'What our guests say — straight from Google',
                 reviews_cta: 'See all reviews on Google',
+                reviews_write: 'Write a review',
                 reviews_based_on: 'based on {n} reviews',
                 reviews_more: 'Read more',
                 reviews_less: 'Show less',
@@ -355,6 +381,7 @@
                 reviews_title: 'Gästebewertungen',
                 reviews_subtitle: 'Was unsere Gäste sagen — direkt von Google',
                 reviews_cta: 'Alle Bewertungen bei Google ansehen',
+                reviews_write: 'Bewertung schreiben',
                 reviews_based_on: 'basierend auf {n} Bewertungen',
                 reviews_more: 'Mehr lesen',
                 reviews_less: 'Weniger',

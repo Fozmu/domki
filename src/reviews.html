@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opinie - Domki Cesarz</title>
+    <meta name="description" content="Opinie gości o Domkach Cesarz - luksusowe domki nad wodą w Jarząbkach.">
+    <link rel="icon" href="./img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-classic {
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            color: #b0b0b0;
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #d4af37; }
+        .nav-link.active { color: #d4af37; }
+        .nav-link.active::after { width: 100%; }
+
+        .section-classic { padding: 6rem 1rem; background-color: #0a0a0a; }
+
+        .section-title {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #888888;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 0 auto 2rem;
+        }
+
+        .btn-classic {
+            background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%);
+            color: #0a0a0a;
+            padding: 1.1rem 3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            border: none;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-classic:hover {
+            background: linear-gradient(135deg, #e5c349 0%, #d4af37 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Rating summary */
+        .rating-summary {
+            background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            max-width: 520px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .rating-score {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            line-height: 1;
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .stars { color: #d4af37; letter-spacing: 3px; font-size: 1.25rem; }
+        .stars .fa-star.empty { color: rgba(212, 175, 55, 0.25); }
+
+        /* Review cards */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+        }
+
+        .review-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+            transform: translateY(-8px);
+        }
+
+        .review-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            flex-shrink: 0;
+        }
+
+        .review-avatar-fallback {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%);
+            color: #0a0a0a;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .review-author { color: #ffffff; font-weight: 500; line-height: 1.3; }
+        .review-when { color: #777; font-size: 0.8rem; }
+        .review-text { color: #b0b0b0; font-size: 0.95rem; flex: 1; }
+        .review-text.clamped {
+            display: -webkit-box;
+            -webkit-line-clamp: 8;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .review-more {
+            align-self: flex-start;
+            margin-top: 0.75rem;
+            background: none;
+            border: none;
+            padding: 0;
+            color: #d4af37;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .review-more:hover { text-decoration: underline; }
+
+        /* Skeleton */
+        .skeleton { background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%); border: 1px solid rgba(212, 175, 55, 0.1); padding: 2rem; }
+        .skeleton-line { height: 12px; background: rgba(255,255,255,0.06); margin-bottom: 12px; animation: pulse 1.5s ease-in-out infinite; }
+        .skeleton-line.short { width: 40%; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        .state-box {
+            max-width: 620px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .footer-classic {
+            background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: #888888;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+        ::selection { background: #d4af37; color: #0a0a0a; }
+
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.2rem; }
+            .section-classic { padding: 4rem 1rem; }
+            .nav-classic { position: fixed; top: 0; width: 100%; }
+            .rating-score { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .section-title { font-size: 1.8rem; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .btn-classic { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-classic fixed top-0 w-full z-50">
+        <div class="w-full px-4 md:px-8">
+            <div class="flex justify-between items-center h-20">
+                <h1 class="text-2xl font-bold" style="font-family: 'Cormorant Garamond', serif; color: #fff; letter-spacing: 2px;">
+                    <a href="./index.html"><i class="fas fa-home" style="color: #d4af37;"></i> DOMKI CESARZ</a>
+                </h1>
+                <div class="hidden md:flex space-x-6 flex-1 justify-center">
+                    <a href="./index.html#home" class="nav-link" data-lang="nav_home">Strona Główna</a>
+                    <a href="./index.html#houses" class="nav-link" data-lang="nav_houses">Domki</a>
+                    <a href="./index.html#amenities" class="nav-link" data-lang="nav_amenities">Udogodnienia</a>
+                    <a href="./index.html#gallery" class="nav-link" data-lang="nav_gallery">Galeria</a>
+                    <a href="./reviews.html" class="nav-link active" data-lang="nav_reviews">Opinie</a>
+                    <a href="./index.html#contact" class="nav-link" data-lang="nav_contact">Kontakt</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="lang-btn" class="flex items-center space-x-1 px-3 py-1 text-sm" style="color: #d4af37; border: 1px solid rgba(212, 175, 55, 0.3); background: rgba(212, 175, 55, 0.1);">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">PL</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 py-2 w-32" style="background: #151515; border: 1px solid rgba(212, 175, 55, 0.2);">
+                            <button onclick="setLanguage('pl')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800" style="color: #b0b0b0;">🇵🇱 Polski</button>
+                            <button onclick="setLanguage('en')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800" style="color: #b0b0b0;">🇬🇧 English</button>
+                            <button onclick="setLanguage('de')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800" style="color: #b0b0b0;">🇩🇪 Deutsch</button>
+                        </div>
+                    </div>
+                    <button id="mobile-menu-btn" class="md:hidden text-2xl" style="color: #d4af37;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800" style="background-color: #0a0a0a;">
+            <div class="px-4 py-3 space-y-3">
+                <a href="./index.html#home" class="block nav-link" data-lang="nav_home">Strona Główna</a>
+                <a href="./index.html#houses" class="block nav-link" data-lang="nav_houses">Domki</a>
+                <a href="./index.html#amenities" class="block nav-link" data-lang="nav_amenities">Udogodnienia</a>
+                <a href="./index.html#gallery" class="block nav-link" data-lang="nav_gallery">Galeria</a>
+                <a href="./reviews.html" class="block nav-link active" data-lang="nav_reviews">Opinie</a>
+                <a href="./index.html#contact" class="block nav-link" data-lang="nav_contact">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Reviews Section -->
+    <section class="section-classic" style="padding-top: 9rem;">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title" data-lang="reviews_title">Opinie Gości</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle" data-lang="reviews_subtitle">
+                Co mówią o nas goście — prosto z Google
+            </p>
+
+            <div id="summary"></div>
+            <div id="reviews" class="reviews-grid"></div>
+
+            <div class="text-center mt-12">
+                <a id="google-link" href="https://maps.app.goo.gl/Vnj8Y66X7WzfdcLt9" target="_blank" rel="noopener" class="btn-classic">
+                    <i class="fab fa-google mr-2"></i><span data-lang="reviews_cta">Zobacz wszystkie opinie w Google</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-classic">
+        <h3 class="text-3xl font-bold mb-4" style="font-family: 'Cormorant Garamond', serif; color: #d4af37; letter-spacing: 3px;">
+            <i class="fas fa-home mr-2"></i>DOMKI CESARZ
+        </h3>
+        <p class="mb-6" style="color: #666;" data-lang="footer_tagline">Twoje miejsce na luksusowy wypoczynek nad wodą</p>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-gray-500 text-sm">
+            <span><i class="far fa-copyright mr-1"></i><span data-lang="footer_copyright">2026 Domki Cesarz. Wszelkie prawa zastrzeżone.</span></span>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            pl: {
+                nav_home: 'Strona Główna', nav_houses: 'Domki', nav_amenities: 'Udogodnienia',
+                nav_gallery: 'Galeria', nav_reviews: 'Opinie', nav_contact: 'Kontakt',
+                reviews_title: 'Opinie Gości',
+                reviews_subtitle: 'Co mówią o nas goście — prosto z Google',
+                reviews_cta: 'Zobacz wszystkie opinie w Google',
+                reviews_based_on: 'na podstawie {n} opinii',
+                reviews_more: 'Czytaj więcej',
+                reviews_less: 'Zwiń',
+                reviews_error: 'Nie udało się wczytać opinii. Zobacz je bezpośrednio w Google.',
+                reviews_empty: 'Brak opinii do wyświetlenia.',
+                footer_tagline: 'Twoje miejsce na luksusowy wypoczynek nad wodą',
+                footer_copyright: '2026 Domki Cesarz. Wszelkie prawa zastrzeżone.'
+            },
+            en: {
+                nav_home: 'Home', nav_houses: 'Houses', nav_amenities: 'Amenities',
+                nav_gallery: 'Gallery', nav_reviews: 'Reviews', nav_contact: 'Contact',
+                reviews_title: 'Guest Reviews',
+                reviews_subtitle: 'What our guests say — straight from Google',
+                reviews_cta: 'See all reviews on Google',
+                reviews_based_on: 'based on {n} reviews',
+                reviews_more: 'Read more',
+                reviews_less: 'Show less',
+                reviews_error: 'Could not load reviews. View them directly on Google.',
+                reviews_empty: 'No reviews to show yet.',
+                footer_tagline: 'Your place for a luxurious waterfront getaway',
+                footer_copyright: '2026 Domki Cesarz. All rights reserved.'
+            },
+            de: {
+                nav_home: 'Startseite', nav_houses: 'Häuser', nav_amenities: 'Ausstattung',
+                nav_gallery: 'Galerie', nav_reviews: 'Bewertungen', nav_contact: 'Kontakt',
+                reviews_title: 'Gästebewertungen',
+                reviews_subtitle: 'Was unsere Gäste sagen — direkt von Google',
+                reviews_cta: 'Alle Bewertungen bei Google ansehen',
+                reviews_based_on: 'basierend auf {n} Bewertungen',
+                reviews_more: 'Mehr lesen',
+                reviews_less: 'Weniger',
+                reviews_error: 'Bewertungen konnten nicht geladen werden. Direkt bei Google ansehen.',
+                reviews_empty: 'Noch keine Bewertungen vorhanden.',
+                footer_tagline: 'Ihr Ort für luxuriösen Urlaub am Wasser',
+                footer_copyright: '2026 Domki Cesarz. Alle Rechte vorbehalten.'
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'pl';
+
+        function t(key) {
+            return (translations[currentLang] && translations[currentLang][key]) || key;
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('current-lang').textContent = lang.toUpperCase();
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            document.getElementById('lang-dropdown').classList.add('hidden');
+            loadReviews();
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            document.getElementById('lang-dropdown').classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#lang-btn') && !e.target.closest('#lang-dropdown')) {
+                document.getElementById('lang-dropdown').classList.add('hidden');
+            }
+        });
+
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // ----- Reviews rendering -----
+        const summaryEl = document.getElementById('summary');
+        const reviewsEl = document.getElementById('reviews');
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        function starsHtml(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += `<i class="fas fa-star${i <= Math.round(rating) ? '' : ' empty'}"></i>`;
+            }
+            return `<span class="stars">${html}</span>`;
+        }
+
+        function showSkeletons() {
+            summaryEl.innerHTML = '';
+            reviewsEl.innerHTML = Array.from({ length: 3 }).map(() => `
+                <div class="skeleton">
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                </div>`).join('');
+        }
+
+        function showState(msgKey) {
+            reviewsEl.innerHTML = '';
+            reviewsEl.style.display = 'block';
+            reviewsEl.innerHTML = `<div class="state-box"><p style="color:#888;">${escapeHtml(t(msgKey))}</p></div>`;
+        }
+
+        function renderSummary(data) {
+            if (!data.rating) { summaryEl.innerHTML = ''; return; }
+            const count = t('reviews_based_on').replace('{n}', data.total);
+            summaryEl.innerHTML = `
+                <div class="rating-summary">
+                    <div class="rating-score">${data.rating.toFixed(1)}</div>
+                    <div class="mt-2">${starsHtml(data.rating)}</div>
+                    <p class="mt-3" style="color:#888; font-size:0.9rem;">
+                        <i class="fab fa-google mr-1" style="color:#d4af37;"></i>${escapeHtml(count)}
+                    </p>
+                </div>`;
+        }
+
+        function renderReviews(reviews) {
+            reviewsEl.style.display = 'grid';
+            reviewsEl.innerHTML = reviews.map((r) => {
+                const initial = escapeHtml((r.author || '?').trim().charAt(0).toUpperCase());
+                const avatar = r.photo
+                    ? `<img class="review-avatar" src="${escapeHtml(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
+                    : `<div class="review-avatar-fallback">${initial}</div>`;
+                const long = (r.text || '').length > 320;
+                return `
+                <div class="review-card">
+                    <div class="review-head">
+                        ${avatar}
+                        <div>
+                            <div class="review-author">${escapeHtml(r.author)}</div>
+                            <div class="review-when">${escapeHtml(r.when)}</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">${starsHtml(r.rating)}</div>
+                    <p class="review-text${long ? ' clamped' : ''}">${escapeHtml(r.text)}</p>
+                    ${long ? `<button class="review-more" type="button">${escapeHtml(t('reviews_more'))}</button>` : ''}
+                </div>`;
+            }).join('');
+
+            reviewsEl.querySelectorAll('.review-more').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const p = btn.previousElementSibling;
+                    const clamped = p.classList.toggle('clamped');
+                    btn.textContent = clamped ? t('reviews_more') : t('reviews_less');
+                });
+            });
+        }
+
+        async function loadReviews() {
+            showSkeletons();
+            try {
+                const res = await fetch(`/.netlify/functions/google-reviews?lang=${currentLang}`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'request failed');
+
+                if (data.mapsUri) document.getElementById('google-link').href = data.mapsUri;
+                renderSummary(data);
+
+                if (!data.reviews || !data.reviews.length) { showState('reviews_empty'); return; }
+                renderReviews(data.reviews);
+            } catch (err) {
+                console.error('reviews load failed:', err);
+                summaryEl.innerHTML = '';
+                showState('reviews_error');
+            }
+        }
+
+        setLanguage(currentLang);
+    </script>
+</body>
+</html>

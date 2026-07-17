@@ -217,6 +217,41 @@
             background-clip: text;
         }
 
+        /* Reviews */
+        .stars { color: #d4af37; letter-spacing: 3px; }
+        .stars .fa-star.empty { color: rgba(212, 175, 55, 0.25); }
+
+        .review-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+
+        .review-avatar {
+            width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
+            border: 1px solid rgba(212, 175, 55, 0.4); flex-shrink: 0;
+        }
+
+        .review-avatar-fallback {
+            width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+            display: grid; place-items: center;
+            background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%);
+            color: #0a0a0a; font-weight: 600; font-size: 1.1rem;
+        }
+
+        .review-author { color: #fff; font-weight: 500; line-height: 1.3; }
+        .review-when { color: #777; font-size: 0.8rem; }
+
+        .review-text {
+            color: #b0b0b0; font-size: 0.95rem;
+            display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .rating-score {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem; line-height: 1; color: #d4af37; font-weight: 700;
+        }
+
+        .skeleton-line { height: 12px; background: rgba(255,255,255,0.06); margin-bottom: 12px; animation: pulse 1.5s ease-in-out infinite; }
+        .skeleton-line.short { width: 40%; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
         /* Divider */
         .divider {
             width: 60px;
@@ -660,8 +695,28 @@
         </div>
     </section>
 
+    <!-- Reviews Section -->
+    <section id="reviews" class="section-classic">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title" data-lang="reviews_title">Opinie Gości</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle" data-lang="reviews_subtitle">
+                Co mówią o nas goście — prosto z Google
+            </p>
+
+            <div id="home-rating" class="text-center mb-10"></div>
+            <div id="home-reviews" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+            <div class="text-center mt-10">
+                <a href="./reviews.html" class="btn-outline">
+                    <i class="fas fa-star mr-2"></i><span data-lang="reviews_see_all">Zobacz wszystkie opinie</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Fishes Section -->
-    <section id="fishes" class="section-classic">
+    <section id="fishes" class="section-classic section-light">
         <div class="max-w-4xl mx-auto px-4">
             <h2 class="section-title" data-lang="fish_title">Ryby w naszych stawach</h2>
             <div class="divider"></div>
@@ -822,6 +877,10 @@
                 amenity_parking_desc: 'Duży parking z wystarczającą ilością miejsca dla wszystkich gości',
                 gallery_title: 'Galeria',
                 gallery_subtitle: 'Zobacz piękno naszych domków i otoczenia',
+                reviews_title: 'Opinie Gości',
+                reviews_subtitle: 'Co mówią o nas goście — prosto z Google',
+                reviews_see_all: 'Zobacz wszystkie opinie',
+                reviews_based_on: 'na podstawie {n} opinii',
                 fish_title: 'Ryby w naszych stawach',
                 fish_subtitle: 'Idealne miejsce dla wędkarzy. W naszych stawach możesz złowić:',
                 contact_title: 'Skontaktuj się z nami',
@@ -891,6 +950,10 @@
                 amenity_parking_desc: 'Large parking area with plenty of space for all guests',
                 gallery_title: 'Gallery',
                 gallery_subtitle: 'See the beauty of our houses and surroundings',
+                reviews_title: 'Guest Reviews',
+                reviews_subtitle: 'What our guests say — straight from Google',
+                reviews_see_all: 'See all reviews',
+                reviews_based_on: 'based on {n} reviews',
                 fish_title: 'Fish in our ponds',
                 fish_subtitle: 'Perfect place for anglers. In our ponds you can catch:',
                 contact_title: 'Contact Us',
@@ -960,6 +1023,10 @@
                 amenity_parking_desc: 'Großer Parkplatz mit ausreichend Platz für alle Gäste',
                 gallery_title: 'Galerie',
                 gallery_subtitle: 'Entdecken Sie die Schönheit unserer Häuser und Umgebung',
+                reviews_title: 'Gästebewertungen',
+                reviews_subtitle: 'Was unsere Gäste sagen — direkt von Google',
+                reviews_see_all: 'Alle Bewertungen ansehen',
+                reviews_based_on: 'basierend auf {n} Bewertungen',
                 fish_title: 'Fische in unseren Teichen',
                 fish_subtitle: 'Perfekter Ort für Angler. In unseren Teichen können Sie fangen:',
                 contact_title: 'Kontaktieren Sie uns',
@@ -997,6 +1064,80 @@
                 }
             });
             document.getElementById('lang-dropdown').classList.add('hidden');
+            loadHomeReviews(lang);
+        }
+
+        // ----- Google reviews (top 3) -----
+        function reviewsEscape(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        function reviewsStars(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += `<i class="fas fa-star${i <= Math.round(rating) ? '' : ' empty'}"></i>`;
+            }
+            return `<span class="stars">${html}</span>`;
+        }
+
+        async function loadHomeReviews(lang) {
+            const section = document.getElementById('reviews');
+            const ratingEl = document.getElementById('home-rating');
+            const listEl = document.getElementById('home-reviews');
+            if (!section) return;
+
+            listEl.innerHTML = Array.from({ length: 3 }).map(() => `
+                <div class="card-classic">
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                </div>`).join('');
+
+            try {
+                const res = await fetch(`/.netlify/functions/google-reviews?lang=${lang}`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'request failed');
+
+                const top = (data.reviews || []).slice(0, 3);
+                if (!top.length) { section.style.display = 'none'; return; }
+
+                section.style.display = '';
+
+                if (data.rating) {
+                    const count = translations[lang].reviews_based_on.replace('{n}', data.total);
+                    ratingEl.innerHTML = `
+                        <div class="rating-score">${data.rating.toFixed(1)}</div>
+                        <div class="mt-2 text-xl">${reviewsStars(data.rating)}</div>
+                        <p class="mt-2" style="color:#888; font-size:0.9rem;">
+                            <i class="fab fa-google mr-1" style="color:#d4af37;"></i>${reviewsEscape(count)}
+                        </p>`;
+                }
+
+                listEl.innerHTML = top.map((r) => {
+                    const initial = reviewsEscape((r.author || '?').trim().charAt(0).toUpperCase());
+                    const avatar = r.photo
+                        ? `<img class="review-avatar" src="${reviewsEscape(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
+                        : `<div class="review-avatar-fallback">${initial}</div>`;
+                    return `
+                    <div class="card-classic">
+                        <div class="review-head">
+                            ${avatar}
+                            <div>
+                                <div class="review-author">${reviewsEscape(r.author)}</div>
+                                <div class="review-when">${reviewsEscape(r.when)}</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">${reviewsStars(r.rating)}</div>
+                        <p class="review-text">${reviewsEscape(r.text)}</p>
+                    </div>`;
+                }).join('');
+            } catch (err) {
+                // Landing page shows no error state — a broken section is worse than no section.
+                console.error('reviews load failed:', err);
+                section.style.display = 'none';
+            }
         }
 
         // Language dropdown toggle

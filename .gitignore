@@ -1,0 +1,9 @@
+# Local secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Netlify
+.netlify/
+
+node_modules/

@@ -1,19 +1,22 @@
-// Creates a reservation via the create_booking() RPC in Supabase, which
-// atomically assigns the first free house for the date range.
-// Env vars required: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+// Creates a reservation in Netlify Blobs, atomically assigning the first
+// free house for the date range. No external DB — storage is a single JSON
+// blob ("all") in the "bookings" store, updated via optimistic concurrency
+// (ETag compare-and-swap) so concurrent requests can't double-book a house.
+
+const { randomUUID } = require('crypto');
+const { connectLambda, getStore } = require('@netlify/blobs');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_STAY_NIGHTS = 2;
+const HOUSE_IDS = [1, 2, 3, 4, 5, 6, 7, 8];
+const BLOB_KEY = 'all';
+const MAX_RETRIES = 20;
 
 exports.handler = async (event) => {
+  connectLambda(event);
+
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'method_not_allowed' });
-  }
-
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    return json(500, { error: 'missing_config', message: 'SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set' });
   }
 
   let body;
@@ -52,46 +55,58 @@ exports.handler = async (event) => {
     return json(400, { error: 'invalid_input', message: `minimum stay is ${MIN_STAY_NIGHTS} nights` });
   }
 
-  try {
-    const res = await fetch(`${url}/rest/v1/rpc/create_booking`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: key,
-        Authorization: `Bearer ${key}`
-      },
-      body: JSON.stringify({
-        p_first_name: firstName,
-        p_last_name: lastName,
-        p_email: email,
-        p_phone: phone,
-        p_check_in: checkIn,
-        p_check_out: checkOut
-      })
-    });
+  const store = getStore('bookings');
 
-    const data = await res.json();
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    const entry = await store.getWithMetadata(BLOB_KEY, { type: 'json' });
+    const bookings = (entry && entry.data) || [];
+    const etag = entry && entry.etag;
 
-    if (!res.ok) {
-      const message = (data && data.message) || '';
-      if (message.includes('no_availability')) {
-        return json(409, { error: 'no_availability', message: 'Brak wolnych domków w tym terminie' });
-      }
-      return json(502, { error: 'supabase_error', message });
+    const houseId = HOUSE_IDS.find((id) => !overlaps(bookings, id, checkIn, checkOut));
+    if (!houseId) {
+      return json(409, { error: 'no_availability', message: 'Brak wolnych domków w tym terminie' });
     }
 
-    return json(201, {
-      id: data.id,
-      houseId: data.house_id,
-      checkIn: data.check_in,
-      checkOut: data.check_out,
-      depositAmount: data.deposit_amount,
-      status: data.status
-    });
-  } catch (err) {
-    return json(502, { error: 'fetch_failed', message: String(err && err.message) });
+    const booking = {
+      id: randomUUID(),
+      houseId,
+      firstName,
+      lastName,
+      email,
+      phone,
+      checkIn,
+      checkOut,
+      status: 'pending',
+      depositAmount: 500,
+      depositPaid: false,
+      cleaned: false,
+      createdAt: new Date().toISOString()
+    };
+
+    const writeOptions = etag ? { onlyIfMatch: etag } : { onlyIfNew: true };
+    const { modified } = await store.setJSON(BLOB_KEY, [...bookings, booking], writeOptions);
+
+    if (modified) {
+      return json(201, {
+        id: booking.id,
+        houseId: booking.houseId,
+        checkIn: booking.checkIn,
+        checkOut: booking.checkOut,
+        depositAmount: booking.depositAmount,
+        status: booking.status
+      });
+    }
+    // Someone else wrote in between — reread and retry.
   }
+
+  return json(409, { error: 'conflict', message: 'Too many concurrent bookings, please retry' });
 };
+
+function overlaps(bookings, houseId, checkIn, checkOut) {
+  return bookings.some(
+    (b) => b.houseId === houseId && b.status !== 'cancelled' && checkIn < b.checkOut && checkOut > b.checkIn
+  );
+}
 
 function json(statusCode, body) {
   return {

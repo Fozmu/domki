@@ -8,6 +8,7 @@ const { connectLambda, getStore } = require('@netlify/blobs');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_STAY_NIGHTS = 2;
+const MIN_LEAD_DAYS = 7;
 const HOUSE_IDS = [1, 2, 3, 4, 5, 6, 7, 8];
 const BLOB_KEY = 'all';
 const MAX_RETRIES = 20;
@@ -44,12 +45,14 @@ exports.handler = async (event) => {
   }
 
   const today = new Date(new Date().toISOString().slice(0, 10));
+  const minCheckIn = new Date(today);
+  minCheckIn.setDate(minCheckIn.getDate() + MIN_LEAD_DAYS);
   const inDate = new Date(checkIn);
   const outDate = new Date(checkOut);
   const nights = (outDate - inDate) / 86400000;
 
-  if (inDate < today) {
-    return json(400, { error: 'invalid_input', message: 'check-in is in the past' });
+  if (inDate < minCheckIn) {
+    return json(400, { error: 'invalid_input', message: `check-in must be at least ${MIN_LEAD_DAYS} days from today` });
   }
   if (nights < MIN_STAY_NIGHTS) {
     return json(400, { error: 'invalid_input', message: `minimum stay is ${MIN_STAY_NIGHTS} nights` });

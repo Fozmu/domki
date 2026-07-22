@@ -1131,7 +1131,7 @@
                 booking_phone: 'Telefon',
                 booking_check_in: 'Data przyjazdu',
                 booking_check_out: 'Data wyjazdu',
-                booking_note: 'Minimum pobytu: 2 dni. Opłata wstępna: 500 zł.',
+                booking_note: 'Minimum pobytu: 2 dni. Rezerwacja z minimum tygodniowym wyprzedzeniem. Opłata wstępna: 500 zł.',
                 booking_submit: 'Wyślij prośbę o rezerwację',
                 booking_submitting: 'Wysyłanie...',
                 booking_success: 'Dziękujemy! Prośba o rezerwację przyjęta (domek #{house}). Skontaktujemy się w sprawie potwierdzenia i depozytu.',
@@ -1228,7 +1228,7 @@
                 booking_phone: 'Phone',
                 booking_check_in: 'Check-in Date',
                 booking_check_out: 'Check-out Date',
-                booking_note: 'Minimum stay: 2 days. Initial deposit: 500 PLN.',
+                booking_note: 'Minimum stay: 2 days. Bookings require at least 1 week notice. Initial deposit: 500 PLN.',
                 booking_submit: 'Send Booking Request',
                 booking_submitting: 'Sending...',
                 booking_success: 'Thank you! Your booking request was received (house #{house}). We will contact you to confirm and arrange the deposit.',
@@ -1325,7 +1325,7 @@
                 booking_phone: 'Telefon',
                 booking_check_in: 'Anreisedatum',
                 booking_check_out: 'Abreisedatum',
-                booking_note: 'Mindestaufenthalt: 2 Tage. Anzahlung: 500 PLN.',
+                booking_note: 'Mindestaufenthalt: 2 Tage. Buchung mindestens 1 Woche im Voraus. Anzahlung: 500 PLN.',
                 booking_submit: 'Buchungsanfrage senden',
                 booking_submitting: 'Wird gesendet...',
                 booking_success: 'Danke! Ihre Buchungsanfrage wurde empfangen (Haus #{house}). Wir melden uns zur Bestätigung und Anzahlung.',
@@ -1508,6 +1508,8 @@
             const msgBox = document.getElementById('bookingMsg');
             const checkInInput = form.elements.checkIn;
             const checkOutInput = form.elements.checkOut;
+            const MIN_LEAD_DAYS = 7;
+            const MIN_STAY_NIGHTS = 2;
 
             function currentLang() {
                 return localStorage.getItem('language') || 'pl';
@@ -1522,17 +1524,20 @@
             }
 
             function setMinDates() {
-                const today = new Date();
-                const todayISO = toISODate(today);
-                checkInInput.min = todayISO;
-                if (!checkInInput.value) checkInInput.value = todayISO;
+                const earliest = new Date();
+                earliest.setDate(earliest.getDate() + MIN_LEAD_DAYS);
+                const earliestISO = toISODate(earliest);
+                checkInInput.min = earliestISO;
+                if (!checkInInput.value || checkInInput.value < earliestISO) {
+                    checkInInput.value = earliestISO;
+                }
                 syncCheckOutMin();
             }
 
             function syncCheckOutMin() {
                 const inVal = checkInInput.value ? new Date(checkInInput.value) : new Date();
                 const minOut = new Date(inVal);
-                minOut.setDate(minOut.getDate() + 2);
+                minOut.setDate(minOut.getDate() + MIN_STAY_NIGHTS);
                 const minOutISO = toISODate(minOut);
                 checkOutInput.min = minOutISO;
                 if (!checkOutInput.value || checkOutInput.value < minOutISO) {

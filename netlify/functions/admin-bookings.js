@@ -5,6 +5,7 @@
 
 const { connectLambda, getStore } = require('@netlify/blobs');
 const { requireSession } = require('./lib/auth');
+const { sendBookingEmail } = require('./lib/email');
 
 const BLOB_KEY = 'all';
 const MAX_RETRIES = 20;
@@ -59,6 +60,7 @@ exports.handler = async (event) => {
       const idx = bookings.findIndex((b) => b.id === id);
       if (idx === -1) return json(404, { error: 'not_found' });
 
+      const prevStatus = bookings[idx].status;
       const updated = { ...bookings[idx] };
       if (body.status !== undefined) updated.status = body.status;
       if (body.depositPaid !== undefined) updated.depositPaid = Boolean(body.depositPaid);
@@ -69,7 +71,12 @@ exports.handler = async (event) => {
 
       const writeOptions = etag ? { onlyIfMatch: etag } : { onlyIfNew: true };
       const { modified } = await store.setJSON(BLOB_KEY, next, writeOptions);
-      if (modified) return json(200, { booking: updated });
+      if (modified) {
+        if (updated.status !== prevStatus && (updated.status === 'confirmed' || updated.status === 'cancelled')) {
+          await sendBookingEmail(updated.status, updated);
+        }
+        return json(200, { booking: updated });
+      }
       // Concurrent write — reread and retry.
     }
 

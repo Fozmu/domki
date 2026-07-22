@@ -5,6 +5,7 @@
 
 const { randomUUID } = require('crypto');
 const { connectLambda, getStore } = require('@netlify/blobs');
+const { sendBookingEmail } = require('./lib/email');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_STAY_NIGHTS = 2;
@@ -90,6 +91,7 @@ exports.handler = async (event) => {
     const { modified } = await store.setJSON(BLOB_KEY, [...bookings, booking], writeOptions);
 
     if (modified) {
+      await sendBookingEmail('received', booking);
       return json(201, {
         id: booking.id,
         houseId: booking.houseId,

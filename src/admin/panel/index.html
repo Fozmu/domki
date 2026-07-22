@@ -5,80 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Panel Administracyjny — Domki Cesarz</title>
+    <link rel="icon" href="../../img/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; }
-        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; color: #fff; }
+        [hidden] { display: none !important; }
 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #e5e5e5;
+            min-height: 100vh;
+            background: radial-gradient(1100px 550px at 15% -10%, rgba(212,175,55,.09), transparent 60%),
+                        radial-gradient(900px 500px at 100% 0%, rgba(212,175,55,.05), transparent 55%),
+                        #0a0a0a;
+        }
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; color: #fff; }
         .gold { color: #d4af37; }
 
         /* ----- Login ----- */
         #loginView { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-box { width: min(360px, 100%); background: #111118; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 32px; }
-        .login-box h1 { font-size: 1.6rem; margin-bottom: 4px; }
-        .login-box p { color: #888; font-size: .9rem; margin-bottom: 22px; }
-        .field { margin-bottom: 16px; }
-        .field label { display: block; font-size: .8rem; font-weight: 600; color: #d4af37; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 6px; }
-        .field input { width: 100%; padding: 11px 12px; border-radius: 8px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); color: #fff; font-size: .95rem; }
-        .field input:focus { outline: none; border-color: #d4af37; }
+        .login-box { width: min(380px, 100%); background: #111118; border: 1px solid rgba(255,255,255,.12); border-radius: 20px;
+            padding: 36px 32px; box-shadow: 0 30px 80px rgba(0,0,0,.5); text-align: center; }
+        .login-mark { width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%); display: grid; place-items: center;
+            font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.5rem; color: #0a0a0a; }
+        .login-box h1 { font-size: 1.5rem; margin-bottom: 4px; }
+        .login-box > p { color: #888; font-size: .88rem; margin-bottom: 24px; }
+        .field { margin-bottom: 16px; text-align: left; }
+        .field label { display: block; font-size: .78rem; font-weight: 600; color: #d4af37; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+        .field input { width: 100%; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); color: #fff; font-size: .95rem; }
+        .field input:focus { outline: none; border-color: #d4af37; background: rgba(255,255,255,.07); }
+
+        /* ----- Buttons ----- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; cursor: pointer;
             background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%); color: #0a0a0a; font-weight: 700; font-size: .92rem;
-            padding: 11px 18px; border-radius: 8px; transition: transform .2s, box-shadow .2s; }
+            padding: 11px 18px; border-radius: 10px; transition: transform .2s, box-shadow .2s; }
         .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(212,175,55,.35); }
-        .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
-        .btn-outline { background: none; border: 1px solid rgba(255,255,255,.25); color: #e5e5e5; }
+        .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-outline { background: none; border: 1px solid rgba(255,255,255,.22); color: #e5e5e5; }
         .btn-outline:hover { border-color: #d4af37; color: #d4af37; box-shadow: none; }
-        .btn-danger { background: rgba(255,46,106,.15); color: #ff8fac; border: 1px solid rgba(255,46,106,.4); }
-        .btn-danger:hover { box-shadow: 0 8px 20px rgba(255,46,106,.25); }
-        .btn-small { padding: 6px 12px; font-size: .8rem; border-radius: 6px; }
-        .msg { border-radius: 8px; padding: 10px 12px; font-size: .88rem; margin-bottom: 14px; }
+        .btn-danger { background: rgba(255,46,106,.14); color: #ff8fac; border: 1px solid rgba(255,46,106,.4); }
+        .btn-danger:hover { box-shadow: 0 8px 20px rgba(255,46,106,.2); }
+        .btn-small { padding: 7px 13px; font-size: .8rem; border-radius: 8px; }
+        .msg { border-radius: 10px; padding: 10px 12px; font-size: .86rem; margin-bottom: 14px; }
         .msg.error { background: rgba(255,46,106,.12); border: 1px solid rgba(255,46,106,.4); color: #ff8fac; }
 
-        /* ----- Dashboard ----- */
-        #dashboardView { max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px; }
-        header.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
-        header.top h1 { font-size: 1.7rem; }
+        /* ----- Topbar ----- */
+        .topbar { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(12px);
+            background: rgba(10,10,10,.82); border-bottom: 1px solid rgba(255,255,255,.08); }
+        .topbar-inner { max-width: 1240px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-mark { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%); display: grid; place-items: center;
+            font-family: 'Cormorant Garamond', serif; font-weight: 700; color: #0a0a0a; font-size: 1.15rem; }
+        .brand-text { line-height: 1.25; }
+        .brand-text .title { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.2rem; color: #fff; }
+        .brand-text .sub { font-size: .74rem; color: #888; text-transform: uppercase; letter-spacing: .06em; }
+        .topbar-right { display: flex; align-items: center; gap: 14px; }
+        .topbar-date { font-size: .82rem; color: #888; display: none; }
+        @media (min-width: 620px) { .topbar-date { display: block; } }
 
-        .panel { background: #111118; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 22px; margin-bottom: 26px; }
-        .panel-title { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        /* ----- Layout ----- */
+        #dashboardView main { max-width: 1240px; margin: 0 auto; padding: 26px 24px 70px; }
 
-        .houses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
-        .house-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 14px; }
-        .house-card .num { font-size: 1.4rem; font-weight: 700; color: #fff; }
-        .house-status { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
-            padding: 3px 9px; border-radius: 100px; margin: 6px 0 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 26px; }
+        .stat-card { background: linear-gradient(160deg, #14141d, #0f0f15); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
+        .stat-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 1.05rem; flex-shrink: 0; }
+        .stat-icon.gold { background: rgba(212,175,55,.14); color: #d4af37; }
+        .stat-icon.green { background: rgba(37,211,102,.14); color: #5dffa0; }
+        .stat-icon.red { background: rgba(255,46,106,.14); color: #ff8fac; }
+        .stat-icon.blue { background: rgba(90,160,255,.14); color: #7fb0ff; }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.6rem; color: #fff; line-height: 1.1; }
+        .stat-label { font-size: .74rem; color: #888; text-transform: uppercase; letter-spacing: .04em; margin-top: 2px; }
+
+        .panel { background: #111118; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 24px; margin-bottom: 26px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+        .panel-title { font-size: 1.25rem; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .panel-title .fa-solid, .panel-title .fas { color: #d4af37; margin-right: 8px; font-size: 1rem; }
+
+        .houses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+        .house-card { position: relative; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.09); border-radius: 14px;
+            padding: 16px; overflow: hidden; transition: transform .2s, border-color .2s; }
+        .house-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
+        .house-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .house-card.free::before { background: #25d366; }
+        .house-card.occupied::before { background: #ff2e6a; }
+        .house-card .num { font-size: 1.35rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .house-card .num i { color: #d4af37; font-size: 1rem; }
+        .house-status { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+            padding: 3px 10px; border-radius: 100px; margin: 8px 0 10px; }
         .house-status.free { background: rgba(37,211,102,.15); color: #5dffa0; }
         .house-status.occupied { background: rgba(255,46,106,.15); color: #ff8fac; }
-        .house-guest { font-size: .82rem; color: #b0b0b0; margin-bottom: 10px; min-height: 1.2em; }
-        .clean-toggle { width: 100%; font-size: .78rem; padding: 7px 10px; }
-        .clean-toggle.dirty { background: rgba(255,180,40,.15); border: 1px solid rgba(255,180,40,.4); color: #ffcf70; }
+        .house-guest { font-size: .8rem; color: #b0b0b0; margin-bottom: 12px; min-height: 1.2em; line-height: 1.4; }
+        .clean-toggle { width: 100%; font-size: .78rem; padding: 8px 10px; }
+        .clean-toggle.dirty { background: rgba(255,180,40,.14); border: 1px solid rgba(255,180,40,.4); color: #ffcf70; }
         .clean-toggle.clean { background: rgba(37,211,102,.1); border: 1px solid rgba(37,211,102,.3); color: #5dffa0; }
 
         .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
         .tab-btn { background: none; border: 1px solid rgba(255,255,255,.16); color: #b0b0b0; padding: 7px 14px;
-            border-radius: 100px; font-size: .82rem; cursor: pointer; font-weight: 600; }
+            border-radius: 100px; font-size: .82rem; cursor: pointer; font-weight: 600; transition: border-color .2s, color .2s; }
+        .tab-btn:hover { border-color: rgba(212,175,55,.5); }
         .tab-btn.active { background: rgba(212,175,55,.15); border-color: #d4af37; color: #d4af37; }
 
+        .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,.07); }
         table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-        th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,.08); white-space: nowrap; }
-        th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .03em; }
-        tbody tr:hover { background: rgba(255,255,255,.03); }
-        .table-scroll { overflow-x: auto; }
-        .badge { display: inline-block; font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 100px; text-transform: uppercase; }
+        thead th { position: sticky; top: 0; background: #16161f; }
+        th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.06); white-space: nowrap; }
+        th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .7rem; letter-spacing: .04em; }
+        tbody tr { transition: background .15s; }
+        tbody tr:nth-child(even) { background: rgba(255,255,255,.015); }
+        tbody tr:hover { background: rgba(212,175,55,.05); }
+        .badge { display: inline-block; font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; text-transform: uppercase; }
         .badge.pending { background: rgba(255,180,40,.15); color: #ffcf70; }
         .badge.confirmed { background: rgba(37,211,102,.15); color: #5dffa0; }
         .badge.cancelled { background: rgba(255,46,106,.15); color: #ff8fac; }
         .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-        .empty-note { color: #666; font-size: .88rem; padding: 20px 0; text-align: center; }
+        .empty-note { color: #666; font-size: .88rem; padding: 26px 0; text-align: center; }
+        .loading-note { color: #666; font-size: .88rem; padding: 10px 4px; }
     </style>
 </head>
 <body>
 
     <div id="loginView">
         <div class="login-box">
+            <div class="login-mark">DC</div>
             <h1>Panel <span class="gold">Administracyjny</span></h1>
             <p>Domki Cesarz</p>
             <div id="loginMsg" class="msg error" hidden></div>
@@ -97,63 +150,84 @@
     </div>
 
     <div id="dashboardView" hidden>
-        <header class="top">
-            <h1>Panel <span class="gold">Administracyjny</span></h1>
-            <button type="button" class="btn btn-outline btn-small" id="logoutBtn">
-                <i class="fas fa-right-from-bracket"></i> Wyloguj
-            </button>
-        </header>
-
-        <section class="panel">
-            <div class="panel-title">
-                <span>Domki</span>
-                <button type="button" class="btn btn-outline btn-small" id="refreshHousesBtn">
-                    <i class="fas fa-rotate"></i> Odśwież
-                </button>
-            </div>
-            <div class="houses-grid" id="housesGrid"></div>
-        </section>
-
-        <section class="panel">
-            <div class="panel-title">
-                <span>Rezerwacje</span>
-                <div class="tabs" id="bookingTabs">
-                    <button type="button" class="tab-btn active" data-scope="today">Dziś</button>
-                    <button type="button" class="tab-btn" data-scope="upcoming">Nadchodzące</button>
-                    <button type="button" class="tab-btn" data-scope="all">Wszystkie</button>
+        <header class="topbar">
+            <div class="topbar-inner">
+                <div class="brand">
+                    <div class="brand-mark">DC</div>
+                    <div class="brand-text">
+                        <div class="title">Domki Cesarz</div>
+                        <div class="sub">Panel Administracyjny</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <span class="topbar-date" id="todayLabel"></span>
+                    <button type="button" class="btn btn-outline btn-small" id="logoutBtn">
+                        <i class="fas fa-right-from-bracket"></i> Wyloguj
+                    </button>
                 </div>
             </div>
-            <div class="table-scroll">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Domek</th>
-                            <th>Gość</th>
-                            <th>Email</th>
-                            <th>Telefon</th>
-                            <th>Przyjazd</th>
-                            <th>Wyjazd</th>
-                            <th>Status</th>
-                            <th>Depozyt</th>
-                            <th>Akcje</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookingsBody"></tbody>
-                </table>
-                <div class="empty-note" id="bookingsEmpty" hidden>Brak rezerwacji w tym widoku.</div>
-            </div>
-        </section>
+        </header>
+
+        <main>
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <section class="panel">
+                <div class="panel-title">
+                    <span><i class="fas fa-house-chimney"></i>Domki</span>
+                    <button type="button" class="btn btn-outline btn-small" id="refreshHousesBtn">
+                        <i class="fas fa-rotate"></i> Odśwież
+                    </button>
+                </div>
+                <div class="houses-grid" id="housesGrid"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-title">
+                    <span><i class="fas fa-calendar-check"></i>Rezerwacje</span>
+                    <div class="tabs" id="bookingTabs">
+                        <button type="button" class="tab-btn active" data-scope="today">Dziś</button>
+                        <button type="button" class="tab-btn" data-scope="upcoming">Nadchodzące</button>
+                        <button type="button" class="tab-btn" data-scope="all">Wszystkie</button>
+                    </div>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Domek</th>
+                                <th>Gość</th>
+                                <th>Email</th>
+                                <th>Telefon</th>
+                                <th>Przyjazd</th>
+                                <th>Wyjazd</th>
+                                <th>Status</th>
+                                <th>Depozyt</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsBody"></tbody>
+                    </table>
+                    <div class="empty-note" id="bookingsEmpty" hidden>Brak rezerwacji w tym widoku.</div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
         const API = '/.netlify/functions';
         let currentScope = 'today';
+        let lastHouses = [];
+        let allBookingsCount = { today: 0, upcoming: 0 };
 
         function esc(s) {
             const d = document.createElement('div');
             d.textContent = s == null ? '' : String(s);
             return d.innerHTML;
         }
+
+        document.getElementById('todayLabel').textContent = new Date().toLocaleDateString('pl-PL', {
+            weekday: 'long', day: 'numeric', month: 'long'
+        });
 
         // ----- Auth -----
         const loginView = document.getElementById('loginView');
@@ -207,33 +281,60 @@
             showLogin();
         });
 
+        // ----- Stats -----
+        const statsGrid = document.getElementById('statsGrid');
+
+        function renderStats() {
+            const free = lastHouses.filter((h) => !h.occupied).length;
+            const occupied = lastHouses.length - free;
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-house-circle-check"></i></div>
+                    <div><div class="stat-value">${free}/${lastHouses.length || 8}</div><div class="stat-label">Wolne domki</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-house-user"></i></div>
+                    <div><div class="stat-value">${occupied}/${lastHouses.length || 8}</div><div class="stat-label">Zajęte domki</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon gold"><i class="fas fa-calendar-day"></i></div>
+                    <div><div class="stat-value">${allBookingsCount.today}</div><div class="stat-label">Rezerwacje dziś</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-calendar-week"></i></div>
+                    <div><div class="stat-value">${allBookingsCount.upcoming}</div><div class="stat-label">Nadchodzące</div></div>
+                </div>`;
+        }
+
         // ----- Houses -----
         const housesGrid = document.getElementById('housesGrid');
 
         async function loadHouses() {
-            housesGrid.innerHTML = '<p style="color:#666;">Ładowanie...</p>';
+            housesGrid.innerHTML = '<p class="loading-note">Ładowanie...</p>';
             const res = await fetch(`${API}/admin-houses`);
             if (res.status === 401) return showLogin();
             const data = await res.json();
+            lastHouses = data.houses || [];
+            renderStats();
 
-            housesGrid.innerHTML = (data.houses || []).map((h) => {
+            housesGrid.innerHTML = lastHouses.map((h) => {
                 const statusClass = h.occupied ? 'occupied' : 'free';
                 const statusLabel = h.occupied ? 'Zajęty' : 'Wolny';
                 const guestLine = h.occupied
                     ? `${esc(h.guest.firstName)} ${esc(h.guest.lastName)} — do ${esc(h.guest.checkOut)}`
-                    : '';
+                    : 'Brak gości';
                 const cleanClass = h.cleaned ? 'clean' : 'dirty';
                 const cleanLabel = h.cleaned ? '<i class="fas fa-check"></i> Posprzątany' : '<i class="fas fa-broom"></i> Do sprzątania';
                 return `
-                    <div class="house-card">
-                        <div class="num">Domek ${h.houseId}</div>
+                    <div class="house-card ${statusClass}">
+                        <div class="num"><i class="fas fa-house-chimney"></i>Domek ${h.houseId}</div>
                         <span class="house-status ${statusClass}">${statusLabel}</span>
                         <div class="house-guest">${guestLine}</div>
                         <button type="button" class="btn clean-toggle ${cleanClass}" data-house="${h.houseId}" data-cleaned="${h.cleaned}">
                             ${cleanLabel}
                         </button>
                     </div>`;
-            }).join('') || '<p style="color:#666;">Brak domków.</p>';
+            }).join('') || '<p class="loading-note">Brak domków.</p>';
 
             housesGrid.querySelectorAll('.clean-toggle').forEach((btn) => {
                 btn.addEventListener('click', async () => {
@@ -271,8 +372,24 @@
             return `<span class="badge ${esc(status)}">${esc(labels[status] || status)}</span>`;
         }
 
+        async function loadBookingCounts() {
+            const [todayRes, upcomingRes] = await Promise.all([
+                fetch(`${API}/admin-bookings?scope=today`),
+                fetch(`${API}/admin-bookings?scope=upcoming`)
+            ]);
+            if (todayRes.ok) {
+                const d = await todayRes.json();
+                allBookingsCount.today = (d.bookings || []).length;
+            }
+            if (upcomingRes.ok) {
+                const d = await upcomingRes.json();
+                allBookingsCount.upcoming = (d.bookings || []).length;
+            }
+            renderStats();
+        }
+
         async function loadBookings() {
-            bookingsBody.innerHTML = `<tr><td colspan="9" style="color:#666;">Ładowanie...</td></tr>`;
+            bookingsBody.innerHTML = `<tr><td colspan="9" class="loading-note">Ładowanie...</td></tr>`;
             bookingsEmpty.hidden = true;
 
             const res = await fetch(`${API}/admin-bookings?scope=${encodeURIComponent(currentScope)}`);
@@ -283,28 +400,29 @@
             if (!bookings.length) {
                 bookingsBody.innerHTML = '';
                 bookingsEmpty.hidden = false;
-                return;
+            } else {
+                bookingsBody.innerHTML = bookings.map((b) => `
+                    <tr data-id="${esc(b.id)}">
+                        <td>Domek ${esc(b.houseId)}</td>
+                        <td>${esc(b.firstName)} ${esc(b.lastName)}</td>
+                        <td>${esc(b.email)}</td>
+                        <td>${esc(b.phone)}</td>
+                        <td>${esc(b.checkIn)}</td>
+                        <td>${esc(b.checkOut)}</td>
+                        <td>${statusBadge(b.status)}</td>
+                        <td>${b.depositPaid ? '<i class="fas fa-check" style="color:#5dffa0;"></i> Wpłacony' : '<i class="fas fa-xmark" style="color:#ff8fac;"></i> Brak'} (${esc(b.depositAmount)} zł)</td>
+                        <td>
+                            <div class="row-actions">
+                                ${b.status !== 'confirmed' ? '<button type="button" class="btn btn-outline btn-small" data-action="confirm">Potwierdź</button>' : ''}
+                                ${b.status !== 'cancelled' ? '<button type="button" class="btn btn-danger btn-small" data-action="cancel">Anuluj</button>' : ''}
+                                ${!b.depositPaid ? '<button type="button" class="btn btn-outline btn-small" data-action="deposit">Depozyt wpłacony</button>' : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
             }
 
-            bookingsBody.innerHTML = bookings.map((b) => `
-                <tr data-id="${esc(b.id)}">
-                    <td>Domek ${esc(b.houseId)}</td>
-                    <td>${esc(b.firstName)} ${esc(b.lastName)}</td>
-                    <td>${esc(b.email)}</td>
-                    <td>${esc(b.phone)}</td>
-                    <td>${esc(b.checkIn)}</td>
-                    <td>${esc(b.checkOut)}</td>
-                    <td>${statusBadge(b.status)}</td>
-                    <td>${b.depositPaid ? '<i class="fas fa-check" style="color:#5dffa0;"></i> Wpłacony' : '<i class="fas fa-xmark" style="color:#ff8fac;"></i> Brak'} (${esc(b.depositAmount)} zł)</td>
-                    <td>
-                        <div class="row-actions">
-                            ${b.status !== 'confirmed' ? '<button type="button" class="btn btn-outline btn-small" data-action="confirm">Potwierdź</button>' : ''}
-                            ${b.status !== 'cancelled' ? '<button type="button" class="btn btn-danger btn-small" data-action="cancel">Anuluj</button>' : ''}
-                            ${!b.depositPaid ? '<button type="button" class="btn btn-outline btn-small" data-action="deposit">Depozyt wpłacony</button>' : ''}
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            loadBookingCounts();
         }
 
         bookingsBody.addEventListener('click', async (e) => {

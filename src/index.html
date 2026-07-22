@@ -611,6 +611,9 @@
                 Luksusowe domki nad wodą - Twoje idealne miejsce na wypoczynek w sercu natury
             </p>
             <div class="space-y-4 md:space-y-0 md:space-x-4">
+                <button type="button" class="btn-classic" id="hero-book-btn">
+                    <i class="fas fa-calendar-check mr-2"></i><span data-lang="hero_btn_book">Zarezerwuj teraz</span>
+                </button>
                 <a href="#houses" class="btn-classic">
                     <i class="fas fa-home mr-2"></i><span data-lang="hero_btn_houses">Zobacz Domki</span>
                 </a>
@@ -677,6 +680,9 @@
                     <i class="fas fa-home mr-2"></i><span data-lang="houses_badge">7 IDENTYCZNYCH DOMKÓW</span>
                 </span>
                 <p class="mt-3" style="color: #888;" data-lang="houses_badge_desc">Każdy z naszych domków oferuje ten sam wysoki standard i wyposażenie</p>
+                <button type="button" class="btn-classic mt-6" id="houses-book-btn">
+                    <i class="fas fa-calendar-check mr-2"></i><span data-lang="houses_book_btn">Zarezerwuj teraz</span>
+                </button>
             </div>
 
             <!-- Two House Cards -->
@@ -949,6 +955,78 @@
         </div>
     </footer>
 
+    <!-- Booking Modal -->
+    <style>
+        .booking-overlay { position: fixed; inset: 0; z-index: 100000; background: rgba(0,0,0,.7);
+            display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .booking-overlay[hidden] { display: none; }
+        .booking-box { position: relative; width: min(480px, 100%); max-height: 90vh; overflow-y: auto;
+            background: #0d0d16; border: 1px solid rgba(255,255,255,.16); border-radius: 20px;
+            padding: 32px 28px; box-shadow: 0 24px 70px rgba(0,0,0,.6); }
+        .booking-box h3 { color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+        .booking-box > p { color: #b0b0b0; margin-bottom: 20px; font-size: .95rem; }
+        .booking-close { position: absolute; top: 16px; right: 20px; background: none; border: none;
+            color: #b0b0b0; font-size: 26px; line-height: 1; cursor: pointer; }
+        .booking-close:hover { color: #fff; }
+        .booking-row { display: flex; gap: 12px; }
+        .booking-row .booking-field { flex: 1; min-width: 0; }
+        .booking-field { margin-bottom: 14px; }
+        .booking-field label { display: block; color: #d4af37; font-size: .82rem; font-weight: 600;
+            margin-bottom: 6px; text-transform: uppercase; letter-spacing: .03em; }
+        .booking-field input { width: 100%; padding: 11px 12px; border-radius: 10px; font-size: .95rem;
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); color: #fff; }
+        .booking-field input:focus { outline: none; border-color: #d4af37; }
+        .booking-field input::-webkit-calendar-picker-indicator { filter: invert(1); }
+        .booking-note { color: #888; font-size: .85rem; margin: 4px 0 18px; }
+        .booking-msg { border-radius: 10px; padding: 12px 14px; font-size: .9rem; margin-bottom: 16px; }
+        .booking-msg.success { background: rgba(37,211,102,.12); border: 1px solid rgba(37,211,102,.4); color: #5dffa0; }
+        .booking-msg.error { background: rgba(255,46,106,.12); border: 1px solid rgba(255,46,106,.4); color: #ff8fac; }
+        #bookingForm button[type="submit"] { width: 100%; border: none; cursor: pointer; }
+        #bookingForm button[type="submit"]:disabled { opacity: .6; cursor: not-allowed; }
+    </style>
+    <div class="booking-overlay" id="bookingModalOverlay" hidden>
+        <div class="booking-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+            <button type="button" class="booking-close" id="bookingModalClose" aria-label="Close">&times;</button>
+            <h3 id="bookingModalTitle" data-lang="booking_title">Zarezerwuj pobyt</h3>
+            <p data-lang="booking_subtitle">Wypełnij formularz — oddzwonimy z potwierdzeniem i danymi do wpłaty depozytu.</p>
+            <form id="bookingForm">
+                <div class="booking-row">
+                    <div class="booking-field">
+                        <label data-lang="booking_first_name">Imię</label>
+                        <input type="text" name="firstName" autocomplete="given-name" required>
+                    </div>
+                    <div class="booking-field">
+                        <label data-lang="booking_last_name">Nazwisko</label>
+                        <input type="text" name="lastName" autocomplete="family-name" required>
+                    </div>
+                </div>
+                <div class="booking-field">
+                    <label data-lang="booking_email">Email</label>
+                    <input type="email" name="email" autocomplete="email" required>
+                </div>
+                <div class="booking-field">
+                    <label data-lang="booking_phone">Telefon</label>
+                    <input type="tel" name="phone" autocomplete="tel" required>
+                </div>
+                <div class="booking-row">
+                    <div class="booking-field">
+                        <label data-lang="booking_check_in">Data przyjazdu</label>
+                        <input type="date" name="checkIn" required>
+                    </div>
+                    <div class="booking-field">
+                        <label data-lang="booking_check_out">Data wyjazdu</label>
+                        <input type="date" name="checkOut" required>
+                    </div>
+                </div>
+                <p class="booking-note" data-lang="booking_note">Minimum pobytu: 2 dni. Opłata wstępna: 500 zł.</p>
+                <div id="bookingMsg" class="booking-msg" hidden></div>
+                <button type="submit" class="btn-classic" id="bookingSubmitBtn">
+                    <span data-lang="booking_submit">Wyślij prośbę o rezerwację</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Cookie Consent -->
     <div class="cookie-bar" id="cookie-bar" style="display: none;">
         <div class="cookie-bar-inner">
@@ -1042,7 +1120,23 @@
                 wa_chip_general: 'Pytanie ogólne',
                 wa_chip_booking: 'Rezerwacja',
                 wa_chip_pricing: 'Cennik',
-                wa_cta: 'Otwórz WhatsApp'
+                wa_cta: 'Otwórz WhatsApp',
+                hero_btn_book: 'Zarezerwuj teraz',
+                houses_book_btn: 'Zarezerwuj teraz',
+                booking_title: 'Zarezerwuj pobyt',
+                booking_subtitle: 'Wypełnij formularz — oddzwonimy z potwierdzeniem i danymi do wpłaty depozytu.',
+                booking_first_name: 'Imię',
+                booking_last_name: 'Nazwisko',
+                booking_email: 'Email',
+                booking_phone: 'Telefon',
+                booking_check_in: 'Data przyjazdu',
+                booking_check_out: 'Data wyjazdu',
+                booking_note: 'Minimum pobytu: 2 dni. Opłata wstępna: 500 zł.',
+                booking_submit: 'Wyślij prośbę o rezerwację',
+                booking_submitting: 'Wysyłanie...',
+                booking_success: 'Dziękujemy! Prośba o rezerwację przyjęta (domek #{house}). Skontaktujemy się w sprawie potwierdzenia i depozytu.',
+                booking_error_no_availability: 'Brak wolnych domków w wybranym terminie. Spróbuj innych dat lub skontaktuj się z nami przez WhatsApp.',
+                booking_error_generic: 'Coś poszło nie tak. Spróbuj ponownie lub napisz do nas na WhatsApp.'
             },
             en: {
                 nav_home: 'Home',
@@ -1123,7 +1217,23 @@
                 wa_chip_general: 'General question',
                 wa_chip_booking: 'Booking',
                 wa_chip_pricing: 'Pricing',
-                wa_cta: 'Open WhatsApp'
+                wa_cta: 'Open WhatsApp',
+                hero_btn_book: 'Book Now',
+                houses_book_btn: 'Book Now',
+                booking_title: 'Book Your Stay',
+                booking_subtitle: "Fill out the form — we'll call back to confirm and arrange the deposit.",
+                booking_first_name: 'First Name',
+                booking_last_name: 'Last Name',
+                booking_email: 'Email',
+                booking_phone: 'Phone',
+                booking_check_in: 'Check-in Date',
+                booking_check_out: 'Check-out Date',
+                booking_note: 'Minimum stay: 2 days. Initial deposit: 500 PLN.',
+                booking_submit: 'Send Booking Request',
+                booking_submitting: 'Sending...',
+                booking_success: 'Thank you! Your booking request was received (house #{house}). We will contact you to confirm and arrange the deposit.',
+                booking_error_no_availability: 'No houses available for the selected dates. Try different dates or reach us on WhatsApp.',
+                booking_error_generic: 'Something went wrong. Please try again or message us on WhatsApp.'
             },
             de: {
                 nav_home: 'Startseite',
@@ -1204,7 +1314,23 @@
                 wa_chip_general: 'Allgemeine Frage',
                 wa_chip_booking: 'Reservierung',
                 wa_chip_pricing: 'Preise',
-                wa_cta: 'WhatsApp öffnen'
+                wa_cta: 'WhatsApp öffnen',
+                hero_btn_book: 'Jetzt buchen',
+                houses_book_btn: 'Jetzt buchen',
+                booking_title: 'Aufenthalt buchen',
+                booking_subtitle: 'Füllen Sie das Formular aus — wir rufen zur Bestätigung und Anzahlung zurück.',
+                booking_first_name: 'Vorname',
+                booking_last_name: 'Nachname',
+                booking_email: 'E-Mail',
+                booking_phone: 'Telefon',
+                booking_check_in: 'Anreisedatum',
+                booking_check_out: 'Abreisedatum',
+                booking_note: 'Mindestaufenthalt: 2 Tage. Anzahlung: 500 PLN.',
+                booking_submit: 'Buchungsanfrage senden',
+                booking_submitting: 'Wird gesendet...',
+                booking_success: 'Danke! Ihre Buchungsanfrage wurde empfangen (Haus #{house}). Wir melden uns zur Bestätigung und Anzahlung.',
+                booking_error_no_availability: 'Für den gewählten Zeitraum sind keine Häuser verfügbar. Versuchen Sie andere Daten oder kontaktieren Sie uns per WhatsApp.',
+                booking_error_generic: 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns per WhatsApp.'
             }
         };
 
@@ -1371,6 +1497,114 @@
             localStorage.setItem(ALERT_KEY, '1');
             positionForAlert();
         });
+
+        // ----- Booking modal -----
+        (function () {
+            const overlay = document.getElementById('bookingModalOverlay');
+            const closeBtn = document.getElementById('bookingModalClose');
+            const form = document.getElementById('bookingForm');
+            const submitBtn = document.getElementById('bookingSubmitBtn');
+            const submitLabel = submitBtn.querySelector('span');
+            const msgBox = document.getElementById('bookingMsg');
+            const checkInInput = form.elements.checkIn;
+            const checkOutInput = form.elements.checkOut;
+
+            function currentLang() {
+                return localStorage.getItem('language') || 'pl';
+            }
+
+            function t(key) {
+                return (translations[currentLang()] && translations[currentLang()][key]) || key;
+            }
+
+            function toISODate(date) {
+                return date.toISOString().slice(0, 10);
+            }
+
+            function setMinDates() {
+                const today = new Date();
+                const todayISO = toISODate(today);
+                checkInInput.min = todayISO;
+                if (!checkInInput.value) checkInInput.value = todayISO;
+                syncCheckOutMin();
+            }
+
+            function syncCheckOutMin() {
+                const inVal = checkInInput.value ? new Date(checkInInput.value) : new Date();
+                const minOut = new Date(inVal);
+                minOut.setDate(minOut.getDate() + 2);
+                const minOutISO = toISODate(minOut);
+                checkOutInput.min = minOutISO;
+                if (!checkOutInput.value || checkOutInput.value < minOutISO) {
+                    checkOutInput.value = minOutISO;
+                }
+            }
+
+            function openModal() {
+                overlay.hidden = false;
+                document.body.style.overflow = 'hidden';
+                msgBox.hidden = true;
+                setMinDates();
+            }
+
+            function closeModal() {
+                overlay.hidden = true;
+                document.body.style.overflow = '';
+            }
+
+            function showMsg(kind, text) {
+                msgBox.hidden = false;
+                msgBox.className = 'booking-msg ' + kind;
+                msgBox.textContent = text;
+            }
+
+            document.getElementById('hero-book-btn').addEventListener('click', openModal);
+            document.getElementById('houses-book-btn').addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+            checkInInput.addEventListener('change', syncCheckOutMin);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitLabel.textContent = t('booking_submitting');
+                msgBox.hidden = true;
+
+                const payload = {
+                    firstName: form.elements.firstName.value.trim(),
+                    lastName: form.elements.lastName.value.trim(),
+                    email: form.elements.email.value.trim(),
+                    phone: form.elements.phone.value.trim(),
+                    checkIn: checkInInput.value,
+                    checkOut: checkOutInput.value
+                };
+
+                try {
+                    const res = await fetch('/.netlify/functions/create-booking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        showMsg('success', t('booking_success').replace('{house}', data.houseId));
+                        form.reset();
+                        setMinDates();
+                    } else if (data.error === 'no_availability') {
+                        showMsg('error', t('booking_error_no_availability'));
+                    } else {
+                        showMsg('error', data.message || t('booking_error_generic'));
+                    }
+                } catch (err) {
+                    showMsg('error', t('booking_error_generic'));
+                } finally {
+                    submitBtn.disabled = false;
+                    submitLabel.textContent = t('booking_submit');
+                }
+            });
+        })();
 
         // ----- Cookie consent + Google Maps gating -----
         const COOKIE_KEY = 'cookieConsent';

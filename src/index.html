@@ -557,10 +557,10 @@
                 </h1>
                 <div class="hidden md:flex space-x-6 flex-1 justify-center">
                     <a href="#home" class="nav-link" data-lang="nav_home">Strona Główna</a>
+                    <a href="#video-tour" class="nav-link" data-lang="nav_video">Wideo</a>
                     <a href="#houses" class="nav-link" data-lang="nav_houses">Domki</a>
                     <a href="#amenities" class="nav-link" data-lang="nav_amenities">Udogodnienia</a>
                     <a href="#gallery" class="nav-link" data-lang="nav_gallery">Galeria</a>
-                    <a href="#video-tour" class="nav-link" data-lang="nav_video">Wideo</a>
                     <a href="#fishes" class="nav-link" data-lang="nav_fish">Ryby</a>
                     <a href="./reviews.html" class="nav-link" data-lang="nav_reviews">Opinie</a>
                     <a href="#contact" class="nav-link" data-lang="nav_contact">Kontakt</a>
@@ -589,10 +589,10 @@
         <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800" style="background-color: #0a0a0a;">
             <div class="px-4 py-3 space-y-3">
                 <a href="#home" class="block nav-link" data-lang="nav_home">Strona Główna</a>
+                <a href="#video-tour" class="block nav-link" data-lang="nav_video">Wideo</a>
                 <a href="#houses" class="block nav-link" data-lang="nav_houses">Domki</a>
                 <a href="#amenities" class="block nav-link" data-lang="nav_amenities">Udogodnienia</a>
                 <a href="#gallery" class="block nav-link" data-lang="nav_gallery">Galeria</a>
-                <a href="#video-tour" class="block nav-link" data-lang="nav_video">Wideo</a>
                 <a href="#fishes" class="block nav-link" data-lang="nav_fish">Ryby</a>
                 <a href="./reviews.html" class="block nav-link" data-lang="nav_reviews">Opinie</a>
                 <a href="#contact" class="block nav-link" data-lang="nav_contact">Kontakt</a>
@@ -616,6 +616,20 @@
                     <i class="fas fa-phone mr-2"></i><span data-lang="hero_btn_contact">Skontaktuj się</span>
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Video Tour Section -->
+    <section id="video-tour" class="section-classic">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="section-title" data-lang="video_title">Zanim Przyjedziesz</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle" data-lang="video_subtitle">
+                Krótki film z najważniejszymi informacjami o naszym terenie
+            </p>
+            <video controls preload="metadata" playsinline style="width: 100%; max-width: 900px; display: block; margin: 0 auto; border: 1px solid rgba(212, 175, 55, 0.2);">
+                <source src="./video/tour.mp4" type="video/mp4">
+            </video>
         </div>
     </section>
 
@@ -866,20 +880,6 @@
         </div>
     </section>
 
-    <!-- Video Tour Section -->
-    <section id="video-tour" class="section-classic">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="section-title" data-lang="video_title">Zwiedzanie Domków</h2>
-            <div class="divider"></div>
-            <p class="section-subtitle" data-lang="video_subtitle">
-                Zobacz nasze domki od środka
-            </p>
-            <video controls preload="metadata" playsinline style="width: 100%; max-width: 900px; display: block; margin: 0 auto; border: 1px solid rgba(212, 175, 55, 0.2);" poster="./img/cover img.png">
-                <source src="./video/tour.mp4" type="video/mp4">
-            </video>
-        </div>
-    </section>
-
     <!-- Fishes Section -->
     <section id="fishes" class="section-classic section-light">
         <div class="max-w-4xl mx-auto px-4">
@@ -1060,8 +1060,8 @@
                 amenity_parking_desc: 'Duży parking z wystarczającą ilością miejsca dla wszystkich gości',
                 gallery_title: 'Galeria',
                 gallery_subtitle: 'Zobacz piękno naszych domków i otoczenia',
-                video_title: 'Zwiedzanie Domków',
-                video_subtitle: 'Zobacz nasze domki od środka',
+                video_title: 'Zanim Przyjedziesz',
+                video_subtitle: 'Krótki film z najważniejszymi informacjami o naszym terenie',
                 reviews_title: 'Opinie Gości',
                 reviews_subtitle: 'Co mówią o nas goście — prosto z Google',
                 reviews_see_all: 'Zobacz wszystkie opinie',
@@ -1144,8 +1144,8 @@
                 amenity_parking_desc: 'Large parking area with plenty of space for all guests',
                 gallery_title: 'Gallery',
                 gallery_subtitle: 'See the beauty of our houses and surroundings',
-                video_title: 'House Tour',
-                video_subtitle: 'See our houses from the inside',
+                video_title: 'Before You Arrive',
+                video_subtitle: 'A short video with the key info about our site',
                 reviews_title: 'Guest Reviews',
                 reviews_subtitle: 'What our guests say — straight from Google',
                 reviews_see_all: 'See all reviews',
@@ -1228,8 +1228,8 @@
                 amenity_parking_desc: 'Großer Parkplatz mit ausreichend Platz für alle Gäste',
                 gallery_title: 'Galerie',
                 gallery_subtitle: 'Entdecken Sie die Schönheit unserer Häuser und Umgebung',
-                video_title: 'Hausbesichtigung',
-                video_subtitle: 'Sehen Sie unsere Häuser von innen',
+                video_title: 'Bevor Sie Ankommen',
+                video_subtitle: 'Ein kurzes Video mit den wichtigsten Informationen zu unserem Gelände',
                 reviews_title: 'Gästebewertungen',
                 reviews_subtitle: 'Was unsere Gäste sagen — direkt von Google',
                 reviews_see_all: 'Alle Bewertungen ansehen',

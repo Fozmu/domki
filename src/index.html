@@ -539,9 +539,60 @@
 
         .studio-credit:hover { color: #d4af37; }
         .studio-credit img { height: 20px; width: auto; opacity: 0.85; }
+
+        /* Page Loader */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .loader-ring {
+            width: 44px;
+            height: 44px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-top-color: #d4af37;
+            border-radius: 50%;
+            animation: loader-spin 0.9s linear infinite;
+        }
+
+        @keyframes loader-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
     </style>
 </head>
-<body>
+<body class="loading">
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-title">Domki Cesarz</div>
+        <div class="loader-ring"></div>
+    </div>
+
     <!-- Construction Notice -->
     <div class="construction-alert" id="construction-alert" style="position: fixed; top: 0; left: 0; right: 0; z-index: 70;">
         <i class="fas fa-triangle-exclamation"></i><span data-lang="construction_alert">Uwaga: do 2027 roku w okolicy trwają prace budowlane - możliwy hałas.</span>
@@ -1565,6 +1616,18 @@
             if (typeof setLanguage === 'function') {
                 setLanguage(localStorage.getItem('language') || 'pl');
             }
+        })();
+    </script>
+
+    <script>
+        (function () {
+            function hideLoader() {
+                document.body.classList.remove('loading');
+                var l = document.getElementById('pageLoader');
+                if (l) l.classList.add('loaded');
+            }
+            window.addEventListener('load', hideLoader);
+            setTimeout(hideLoader, 6000);
         })();
     </script>
 </body>

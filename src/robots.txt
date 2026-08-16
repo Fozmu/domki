@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /staff.html
+Disallow: /panel.html
+Disallow: /panel
 
 Sitemap: https://www.yourdomain.com/sitemap.xml

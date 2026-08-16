@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel - Domki Cesarz</title>
+<link rel="icon" href="./img/icon.ico" type="image/x-icon">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0a0a0a;
+    color: #e5e5e5;
+    min-height: 100vh;
+  }
+
+  h1, h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  header.top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  header.top h1 { font-size: 1.8rem; }
+
+  #logout-btn {
+    background: none;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #b0b0b0;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  #logout-btn:hover { border-color: #d4af37; color: #d4af37; }
+
+  /* Login screen */
+  #login-screen {
+    max-width: 360px;
+    margin: 12vh auto 0;
+    padding: 0 1.25rem;
+    text-align: center;
+  }
+  #login-screen h1 { font-size: 2rem; margin-bottom: 1.75rem; }
+  #login-form { display: flex; flex-direction: column; gap: 0.85rem; text-align: left; }
+  #login-form label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #b0b0b0; margin-bottom: 0.3rem; display: block; }
+  #login-form input {
+    width: 100%;
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #e5e5e5;
+    padding: 0.65rem 0.8rem;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+  #login-form input:focus { outline: none; border-color: #d4af37; }
+  #login-error { color: #e06a6a; font-size: 0.85rem; min-height: 1.2em; }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%);
+    color: #0a0a0a;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-gold:hover { background: linear-gradient(135deg, #e5c349 0%, #d4af37 100%); }
+
+  /* Board */
+  .board { display: flex; flex-direction: column; gap: 2rem; }
+  .col h2 {
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b0b0b0;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .col h2 .count { color: #d4af37; }
+
+  .task-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .task {
+    background: #121212;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+  }
+  .task[data-priority="high"] { border-left-color: #c0453f; }
+  .task[data-priority="normal"] { border-left-color: #d4af37; }
+  .task[data-priority="low"] { border-left-color: #4a7a5a; }
+  .task[data-status="done"] { opacity: 0.55; }
+
+  .task-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+  .task-title { font-size: 1.02rem; color: #fff; font-weight: 500; }
+  .task[data-status="done"] .task-title { text-decoration: line-through; }
+  .task-meta { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.3rem; }
+  .task-details { font-size: 0.88rem; color: #c5c5c5; margin-top: 0.55rem; white-space: pre-wrap; }
+
+  .task-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .task-actions button {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #b0b0b0;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .task-actions button:hover { border-color: #d4af37; color: #d4af37; }
+
+  .empty { color: #666; font-size: 0.88rem; font-style: italic; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <h1>Panel</h1>
+  <form id="login-form">
+    <div>
+      <label for="username">Login</label>
+      <input type="text" id="username" autocomplete="username" required>
+    </div>
+    <div>
+      <label for="password">Hasło</label>
+      <input type="password" id="password" autocomplete="current-password" required>
+    </div>
+    <p id="login-error"></p>
+    <button type="submit" class="btn-gold">Zaloguj</button>
+  </form>
+</div>
+
+<div id="app" class="wrap hidden">
+  <header class="top">
+    <h1>Panel</h1>
+    <button id="logout-btn">Wyloguj</button>
+  </header>
+
+  <section class="board" id="board">
+    <div class="col">
+      <h2>Do zrobienia <span class="count" id="count-open">0</span></h2>
+      <div class="task-list" id="list-open"></div>
+    </div>
+    <div class="col">
+      <h2>W trakcie <span class="count" id="count-in_progress">0</span></h2>
+      <div class="task-list" id="list-in_progress"></div>
+    </div>
+    <div class="col">
+      <h2>Zrobione <span class="count" id="count-done">0</span></h2>
+      <div class="task-list" id="list-done"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var API = '/api/tasks';
+  var STORAGE_KEY = 'staffAuth';
+  var PRIORITY_LABEL = { low: 'Niski', normal: 'Normalny', high: 'Wysoki' };
+
+  var loginScreen = document.getElementById('login-screen');
+  var app = document.getElementById('app');
+  var loginForm = document.getElementById('login-form');
+  var loginError = document.getElementById('login-error');
+  var logoutBtn = document.getElementById('logout-btn');
+
+  function authHeader() {
+    var creds = sessionStorage.getItem(STORAGE_KEY);
+    return creds ? { Authorization: 'Basic ' + creds } : {};
+  }
+
+  function api(method, body) {
+    return fetch(API, {
+      method: method,
+      headers: Object.assign({ 'Content-Type': 'application/json' }, authHeader()),
+      body: body ? JSON.stringify(body) : undefined
+    });
+  }
+
+  function showApp() {
+    loginScreen.classList.add('hidden');
+    app.classList.remove('hidden');
+    loadTasks();
+  }
+
+  function showLogin(message) {
+    app.classList.add('hidden');
+    loginScreen.classList.remove('hidden');
+    loginError.textContent = message || '';
+  }
+
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var user = document.getElementById('username').value;
+    var pass = document.getElementById('password').value;
+    var creds = btoa(user + ':' + pass);
+    sessionStorage.setItem(STORAGE_KEY, creds);
+
+    api('GET').then(function (res) {
+      if (res.status === 401) {
+        sessionStorage.removeItem(STORAGE_KEY);
+        loginError.textContent = 'Nieprawidłowy login lub hasło.';
+        return;
+      }
+      if (!res.ok) {
+        loginError.textContent = 'Błąd serwera. Spróbuj ponownie.';
+        return;
+      }
+      loginError.textContent = '';
+      showApp();
+    }).catch(function () {
+      loginError.textContent = 'Brak połączenia z serwerem.';
+    });
+  });
+
+  logoutBtn.addEventListener('click', function () {
+    sessionStorage.removeItem(STORAGE_KEY);
+    showLogin();
+  });
+
+  function loadTasks() {
+    api('GET').then(function (res) {
+      if (res.status === 401) return showLogin('Sesja wygasła, zaloguj się ponownie.');
+      if (!res.ok) throw new Error('load failed');
+      return res.json();
+    }).then(function (data) {
+      if (data) renderTasks(data.tasks || []);
+    }).catch(function () {
+      // leave existing UI as-is on transient failure
+    });
+  }
+
+  function renderTasks(tasks) {
+    var groups = { open: [], in_progress: [], done: [] };
+    tasks.forEach(function (t) {
+      (groups[t.status] || groups.open).push(t);
+    });
+
+    Object.keys(groups).forEach(function (status) {
+      var list = document.getElementById('list-' + status);
+      var count = document.getElementById('count-' + status);
+      count.textContent = groups[status].length;
+      list.innerHTML = '';
+
+      if (!groups[status].length) {
+        var empty = document.createElement('p');
+        empty.className = 'empty';
+        empty.textContent = 'Brak zadań.';
+        list.appendChild(empty);
+        return;
+      }
+
+      groups[status].forEach(function (task) {
+        list.appendChild(renderTask(task));
+      });
+    });
+  }
+
+  function renderTask(task) {
+    var el = document.createElement('div');
+    el.className = 'task';
+    el.dataset.priority = task.priority;
+    el.dataset.status = task.status;
+
+    var top = document.createElement('div');
+    top.className = 'task-top';
+
+    var left = document.createElement('div');
+    var title = document.createElement('div');
+    title.className = 'task-title';
+    title.textContent = task.title;
+    var meta = document.createElement('div');
+    meta.className = 'task-meta';
+    meta.textContent = [
+      PRIORITY_LABEL[task.priority] || task.priority,
+      task.reporter ? ('od: ' + task.reporter) : null,
+      formatDate(task.createdAt)
+    ].filter(Boolean).join(' • ');
+    left.appendChild(title);
+    left.appendChild(meta);
+
+    var actions = document.createElement('div');
+    actions.className = 'task-actions';
+
+    if (task.status !== 'in_progress') {
+      actions.appendChild(actionBtn('W trakcie', function () { setStatus(task.id, 'in_progress'); }));
+    }
+    if (task.status !== 'done') {
+      actions.appendChild(actionBtn('Gotowe', function () { setStatus(task.id, 'done'); }));
+    }
+    if (task.status !== 'open') {
+      actions.appendChild(actionBtn('Otwórz', function () { setStatus(task.id, 'open'); }));
+    }
+
+    top.appendChild(left);
+    top.appendChild(actions);
+    el.appendChild(top);
+
+    if (task.details) {
+      var details = document.createElement('div');
+      details.className = 'task-details';
+      details.textContent = task.details;
+      el.appendChild(details);
+    }
+
+    return el;
+  }
+
+  function actionBtn(label, onClick) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = label;
+    btn.addEventListener('click', onClick);
+    return btn;
+  }
+
+  function setStatus(id, status) {
+    api('PATCH', { id: id, status: status }).then(function (res) {
+      if (res.status === 401) return showLogin('Sesja wygasła, zaloguj się ponownie.');
+      if (!res.ok) throw new Error('update failed');
+      loadTasks();
+    }).catch(function () {
+      alert('Nie udało się zaktualizować zadania.');
+    });
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    return d.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      + ' ' + d.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  if (sessionStorage.getItem(STORAGE_KEY)) {
+    api('GET').then(function (res) {
+      if (res.ok) { showApp(); } else { sessionStorage.removeItem(STORAGE_KEY); }
+    }).catch(function () {});
+  }
+})();
+</script>
+
+</body>
+</html>

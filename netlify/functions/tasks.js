@@ -4,9 +4,7 @@
 
 const crypto = require('crypto');
 const { connectLambda, getStore } = require('@netlify/blobs');
-
-const STORE_NAME = 'staff-tasks';
-const BLOB_KEY = 'tasks';
+const { STORE_NAME, loadAndPurge, saveTasks } = require('./lib/task-store');
 
 exports.handler = async (event) => {
   connectLambda(event);
@@ -20,14 +18,14 @@ exports.handler = async (event) => {
   try {
     switch (event.httpMethod) {
       case 'GET':
-        return json(200, { tasks: await loadTasks(store) });
+        return json(200, { tasks: await loadAndPurge(store) });
 
       case 'POST': {
         const body = parseBody(event.body);
         if (!body.title || !body.title.trim()) {
           return json(400, { error: 'title_required' });
         }
-        const tasks = await loadTasks(store);
+        const tasks = await loadAndPurge(store);
         const task = {
           id: crypto.randomUUID(),
           title: body.title.trim().slice(0, 200),
@@ -39,14 +37,14 @@ exports.handler = async (event) => {
           updatedAt: new Date().toISOString()
         };
         tasks.unshift(task);
-        await store.setJSON(BLOB_KEY, tasks);
+        await saveTasks(store, tasks);
         return json(201, { task });
       }
 
       case 'PATCH': {
         const body = parseBody(event.body);
         if (!body.id) return json(400, { error: 'id_required' });
-        const tasks = await loadTasks(store);
+        const tasks = await loadAndPurge(store);
         const task = tasks.find((t) => t.id === body.id);
         if (!task) return json(404, { error: 'not_found' });
         if (body.status && ['open', 'in_progress', 'done'].includes(body.status)) {
@@ -62,7 +60,7 @@ exports.handler = async (event) => {
           task.priority = body.priority;
         }
         task.updatedAt = new Date().toISOString();
-        await store.setJSON(BLOB_KEY, tasks);
+        await saveTasks(store, tasks);
         return json(200, { task });
       }
 
@@ -70,9 +68,9 @@ exports.handler = async (event) => {
         const id = (event.queryStringParameters && event.queryStringParameters.id)
           || parseBody(event.body).id;
         if (!id) return json(400, { error: 'id_required' });
-        const tasks = await loadTasks(store);
+        const tasks = await loadAndPurge(store);
         const next = tasks.filter((t) => t.id !== id);
-        await store.setJSON(BLOB_KEY, next);
+        await saveTasks(store, next);
         return json(200, { ok: true });
       }
 
@@ -83,11 +81,6 @@ exports.handler = async (event) => {
     return json(500, { error: 'server_error', message: String(err && err.message) });
   }
 };
-
-async function loadTasks(store) {
-  const tasks = await store.get(BLOB_KEY, { type: 'json' });
-  return Array.isArray(tasks) ? tasks : [];
-}
 
 function parseBody(raw) {
   try {
